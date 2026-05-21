@@ -1,0 +1,164 @@
+# ChargeGrid AI - Modelo de Testes Sprint 1
+## 5+ Perguntas Esperadas e Respostas Ideais
+
+---
+
+## TESTE 1: Pergunta Operacional Básica
+
+**PERGUNTA:**
+"Como iniciar um carregamento no GW7K-HCA-20 usando o aplicativo SolarGo?"
+
+**RESPOSTA ESPERADA (padrão):**
+Deve mencionar:
+- Abrir SolarGo via Bluetooth
+- Conectar plugue ao veículo primeiro
+- Localizar função de carregamento
+- Aguardar confirmação (LED ou notificação)
+- Status esperado: LED verde = carregando
+
+**CRITÉRIO DE SUCESSO:**
+✓ Respostas incluem passos sequenciais
+✓ Menciona ordem correta (plugue antes do RFID/app)
+✓ Indica feedback visual esperado
+
+---
+
+## TESTE 2: Pergunta Técnica - Modbus
+
+**PERGUNTA:**
+"Qual é o registro Modbus para ligar/desligar o carregamento e quais são os valores?"
+
+**RESPOSTA ESPERADA (padrão):**
+Deve mencionar:
+- Registro: 10060 (Turn on/off charging)
+- Tipo: RW U16 (leitura e escrita)
+- Valores: 1 = desligar, 2 = ligar
+- Unidade: sem fator (valores simples)
+- Exemplo: "escrever 2 em 10060 para ligar"
+
+**CRITÉRIO DE SUCESSO:**
+✓ Cita número exato do registro (10060)
+✓ Inclui valores corretos (1 e 2)
+✓ Menciona tipo RW
+✓ Descreve ação esperada
+
+---
+
+## TESTE 3: Pergunta sobre Autenticação RFID
+
+**PERGUNTA:**
+"Como vincular um cartão RFID ao carregador e qual é o limite de cartões?"
+
+**RESPOSTA ESPERADA (padrão):**
+Deve mencionar:
+- Usar SolarGo > More/Mais > Gerenciamento de Cartão
+- OU usar SEMS Portal com opção semelhante
+- Limite: até 10 cartões RFID por carregador
+- Sequência: conectar plugue → passar cartão
+- LED feedback: vermelho = erro, verde = sucesso
+
+**CRITÉRIO DE SUCESSO:**
+✓ Cita limite correto (10 cartões)
+✓ Menciona ambos apps (SolarGo e SEMS)
+✓ Explica sequência correta
+✓ Descreve feedback visual
+
+---
+
+## TESTE 4: Pergunta sobre Dynamic Load Control
+
+**PERGUNTA:**
+"O que é Dynamic Load Management e como ativar no GW11K-HCA-20?"
+
+**RESPOSTA ESPERADA (padrão):**
+Deve mencionar:
+- Objetivo: evitar sobrecarga elétrica da instalação
+- Monitora consumo total (casa + carregador)
+- Reduz potência automaticamente se limite se aproxima
+- Registro 10025: 0=desligado, 1=ligado (RW U16)
+- Registro 10026: corrente nominal do disjuntor (em Amperes)
+- Exemplo: disjuntor 40A → escrever 40 em 10026
+
+**CRITÉRIO DE SUCESSO:**
+✓ Explica funcionamento (não só técnica)
+✓ Cita registros corretos (10025, 10026)
+✓ Inclui unidade (Amperes)
+✓ Fornece exemplo prático
+
+---
+
+## TESTE 5: Pergunta sobre Troubleshooting
+
+**PERGUNTA:**
+"O carregador está com LED vermelho fixo. Qual é a primeira coisa a verificar?"
+
+**RESPOSTA ESPERADA (padrão):**
+Deve mencionar:
+- LED vermelho fixo = falta de aterramento OU falha AC (parada de emergência)
+- Primeiro: verificar aterramento (cabo verde/amarelo conectado)
+- Segundo: desligar RCBO por 10s e religar (reset)
+- Terceiro: verificar tensão de entrada (220V ou 380V conforme modelo)
+- Se persiste: verificar proteção do disjuntor do imóvel
+- Se ainda persiste: escalação para técnico GoodWe
+
+**CRITÉRIO DE SUCESSO:**
+✓ Cita LED vermelho fixo = falta aterramento ou falha
+✓ Inclui ordem lógica de verificação
+✓ Menciona desligamento RCBO
+✓ Sugere escalação adequada
+
+---
+
+## TESTE 6: Pergunta sobre Especificações
+
+**PERGUNTA:**
+"Qual é a temperatura máxima de operação e a proteção IP do GW22K-HCA-20?"
+
+**RESPOSTA ESPERADA (padrão):**
+Deve mencionar:
+- Temperatura máxima de operação: +50°C
+- Proteção IP (exterior): IP54
+- Proteção IP (interior): IP20
+- Proteção IK: IK10
+- Ambiente: -10°C a +50°C é faixa operacional
+- Altitude máxima: 2000m
+
+**CRITÉRIO DE SUCESSO:**
+✓ Cita valores exatos (+50°C, IP54, IP20)
+✓ Distingue interior vs exterior
+✓ Inclui proteção IK
+✓ Menciona faixa completa
+
+---
+
+## MÉTRICAS DE AVALIAÇÃO RAG
+
+| Pergunta | Métrica | Alvo | Validação |
+|----------|---------|------|----------|
+| 1 | Completude (passos) | ≥80% | Inclui pelo menos 4/5 passos |
+| 2 | Precisão Técnica | 100% | Registro e valores exatos |
+| 3 | Cobertura | ≥80% | Menciona app, limite, feedback |
+| 4 | Clareza | ≥80% | Explica funcionamento + técnica |
+| 5 | Sequência Troubleshooting | ≥90% | Ordem lógica + escalação |
+| 6 | Especificidades | 100% | Valores exatos, sem generalização |
+
+---
+
+## MODO DE TESTE
+
+1. **Perguntar ao chatbot** cada uma das 6 perguntas
+2. **Registrar resposta** literal do RAG
+3. **Comparar com esperado** usando critérios acima
+4. **Pontuação:** 
+   - ✓ Passa: ≥80% dos critérios atendidos
+   - ⚠️ Atenção: 60-79% atendido
+   - ✗ Falha: <60% atendido
+
+---
+
+## RESULTADO ESPERADO
+
+Ao final dos 6 testes:
+- ✅ RAG funcionando: ≥5/6 testes com ✓
+- ⚠️ RAG com melhorias: 3-4/6 testes com ✓
+- ❌ RAG problemático: <3/6 testes com ✓
