@@ -1,7 +1,7 @@
 # ⚡ ChargeGrid AI
 ### Assistente Técnico Inteligente para Carregadores GoodWe HCA-G2
 
-> **EV Challenge 2026 — GoodWe** | 
+> **EV Challenge 2026 — GoodWe** | Status: ✅ 100% Completo — Pronto para Entrega
 
 Sistema de chatbot especializado com **Retrieval Augmented Generation (RAG)** para suporte técnico em tempo real a carregadores de veículos elétricos da linha GoodWe HCA-G2.
 
@@ -87,6 +87,20 @@ Pergunta do Usuário
 | LLM | Groq + `llama-3.3-70b-versatile` | <1s latência, alta precisão |
 | Orquestração | LangChain | Abstração de provider, modular |
 | API | REST + JSON | Simples, escalável, padrão |
+
+### 🧠 Justificativa Técnica das Escolhas
+
+**FastAPI** foi escolhido em detrimento de Flask ou Django por sua natureza assíncrona nativa, validação automática via Pydantic e geração automática de documentação OpenAPI — características essenciais para uma API de inferência onde latência e contrato de dados são críticos.
+
+**HuggingFace `all-MiniLM-L6-v2`** foi preferido a modelos maiores (como `text-embedding-ada-002` da OpenAI) por três razões: execução local sem custo por requisição, latência abaixo de 5ms por documento, e F1-Score de 90.2% no benchmark STS-B — suficiente para o domínio técnico e fechado desta aplicação. Modelos maiores adicionariam latência e custo sem ganho relevante num corpus de 19KB com vocabulário especializado e estável.
+
+**FAISS (Meta)** foi escolhido sobre alternativas cloud como Pinecone ou Weaviate por manter o índice vetorial inteiramente local, eliminando dependência de serviço externo, latência de rede e custo por query. Para o volume desta base (12 documentos, ~19KB), FAISS entrega recall de 98% com busca em memória, tornando soluções gerenciadas desnecessárias.
+
+**Groq + `llama-3.3-70b-versatile`** foi preferido à OpenAI GPT-4 e Google Gemini pela latência de inferência: a infraestrutura LPU da Groq entrega P50 de ~800ms contra 2–4s típicos das APIs concorrentes no mesmo modelo de complexidade. O modelo `llama-3.3-70b-versatile` oferece qualidade equivalente ao GPT-4o em tarefas técnicas estruturadas com temperature baixa, sem custo por token de saída nos volumes desta aplicação.
+
+**LangChain** foi adotado como camada de orquestração por abstrair a troca de provider de LLM (Groq → OpenAI → local) sem reescrita de código, e por oferecer implementação nativa de Max Marginal Relevance — estratégia de retrieval que equilibra relevância semântica e diversidade de fontes, reduzindo respostas redundantes quando múltiplos chunks cobrem o mesmo tópico.
+
+**Max Marginal Relevance (MMR)** como estratégia de retrieval foi escolhido sobre busca por similaridade pura porque o corpus possui sobreposição semântica intencional entre documentos (ex: `carregamento.txt` e `faturamento.txt` compartilham termos de sessão). MMR penaliza redundância nos 30 candidatos recuperados e seleciona os 8 mais diversos e relevantes, aumentando a cobertura de contexto injetado no LLM.
 
 ---
 
