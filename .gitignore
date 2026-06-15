@@ -1,0 +1,49 @@
+# === Ambiente Python ===
+.venv/
+venv/
+env/
+.Python
+*.py[cod]
+*.pyo
+__pycache__/
+*.egg-info/
+dist/
+build/
+
+# === Variáveis de ambiente / segredos ===
+.env
+.env.*
+!.env.example
+
+# === Banco de dados SQLite ===
+*.db
+*.sqlite
+*.sqlite3
+
+# === RAG: arquivos gerados (não versionar) ===
+app/rag/vector_store/
+app/rag/source_pdfs/
+app/rag/docs/
+
+# === Logs ===
+*.log
+logs/
+
+# === Caches de ferramentas ===
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+
+# === IDEs ===
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# === OS ===
+.DS_Store
+Thumbs.db
+desktop.ini
