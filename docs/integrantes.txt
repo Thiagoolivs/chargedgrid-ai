@@ -1,0 +1,21 @@
+ChargeGrid AI — EV Challenge GoodWe
+Sprint 03
+
+INTEGRANTES DO GRUPO
+====================
+
+Preencher antes da entrega. Uma linha por integrante.
+
+Nome completo | RM | Turma | Responsabilidade na Sprint 03
+------------- | -- | ----- | -----------------------------
+              |    |       |
+              |    |       |
+              |    |       |
+              |    |       |
+              |    |       |
+
+Observação: o item 8 da rubrica avalia os commits dos integrantes no
+repositório. Confira, antes de entregar, que o histórico de
+Thiagoolivs/chargedgrid-ai mostra a autoria esperada:
+
+    git log --pretty='%h %an <%ae> %s'
