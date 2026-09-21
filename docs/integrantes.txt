@@ -1,21 +1,29 @@
 ChargeGrid AI — EV Challenge GoodWe
-Sprint 03
+Sprint 03 — Agentes de IA e Evolução Conversacional
 
 INTEGRANTES DO GRUPO
 ====================
 
-Preencher antes da entrega. Uma linha por integrante.
+Nome                                      | RM     | Turma
+----------------------------------------- | ------ | ------
+SAMMY DE MOURA SATO                       | 569182 | [PREENCHER]
+JOÃO PEDRO PEREIRA TEIXEIRA               | 569937 | [PREENCHER]
+JOAO VITOR BELCHIOR DOMINGOS LEITE        | 572478 | [PREENCHER]
+THIAGO DE OLIVEIRA COELHO SOUZA           | 568783 | [PREENCHER]
+GABRIEL PEDRO DE SOUZA                    | 571995 | [PREENCHER]
 
-Nome completo | RM | Turma | Responsabilidade na Sprint 03
-------------- | -- | ----- | -----------------------------
-              |    |       |
-              |    |       |
-              |    |       |
-              |    |       |
-              |    |       |
 
-Observação: o item 8 da rubrica avalia os commits dos integrantes no
-repositório. Confira, antes de entregar, que o histórico de
-Thiagoolivs/chargedgrid-ai mostra a autoria esperada:
+RESPONSABILIDADES NA SPRINT 03
+==============================
+
+O item 7.5 da Sprint exige a principal responsabilidade de cada integrante.
+Preencher antes da entrega — ver docs/relatorio_evolucao.md, seção 7.5.
+
+
+VERIFICAÇÃO DA AUTORIA DOS COMMITS
+==================================
+
+O item 8 avalia os commits dos integrantes no repositório. Confira antes de
+entregar:
 
     git log --pretty='%h %an <%ae> %s'
