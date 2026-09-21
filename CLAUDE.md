@@ -11,6 +11,9 @@ A Sprint 03 é construída sobre `master`. Se algo referenciar
 **Antes de começar qualquer coisa, leia `docs/HANDOFF_SESSAO_LOCAL.md`.** Ele
 diz o que já está pronto, o que falta e em que ordem executar.
 
+**Sob pressão de tempo, leia antes `docs/PLANO_30MIN.md`** — ordem por ponto
+por minuto, o que cortar primeiro e onde está o gargalo real.
+
 ---
 
 ## Regras invioláveis
