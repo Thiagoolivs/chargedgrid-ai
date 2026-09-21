@@ -6,6 +6,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app import database
+from app.routes.agent_chat import router as agent_router
 from app.routes.chat import router as chat_router
 from app.routes.conversations import router as conversations_router
 
@@ -19,6 +20,7 @@ database.init_db()
 app = FastAPI(title="ChargeGrid AI")
 
 app.include_router(chat_router)
+app.include_router(agent_router)
 app.include_router(conversations_router)
 
 if STATIC_DIR.exists():
