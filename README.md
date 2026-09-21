@@ -95,8 +95,8 @@ Pergunta do Usuário
                 ▼
 ┌───────────────────────────────────┐
 │  [3] GENERATION                   │
-│  Groq + llama-3.3-70b-versatile   │
-│  Latência P50: ~800ms             │
+│  Groq (ver relatorio_modelos.md)  │
+│  Latência medida em evals/results │
 └───────────────┬───────────────────┘
                 │
                 ▼
@@ -115,8 +115,8 @@ Pergunta do Usuário
 | Backend | FastAPI (Python, async) | Handlers assíncronos, validação automática |
 | Memória | SQLite | Histórico de conversas local e persistente |
 | Embedding | HuggingFace `all-MiniLM-L6-v2` | 384D, carregado uma vez na inicialização |
-| Vector Store | FAISS (Meta) | Local, privado, recall 98% |
-| LLM | Groq + `llama-3.3-70b-versatile` | ~800ms latência, AsyncGroq |
+| Vector Store | FAISS (Meta) | Local e privado; recall não medido neste repositório |
+| LLM | Groq via `AsyncGroq` | Modelo da Sprint 2 descontinuado pelo provedor — ver `docs/relatorio_modelos.md` |
 | Orquestração | LangChain | Abstração de provider, modular |
 | API | REST + JSON | Simples, escalável, padrão |
 
@@ -150,8 +150,7 @@ Pergunta do Usuário
 |---|---|
 | Modelo | `sentence-transformers/all-MiniLM-L6-v2` |
 | Dimensões | 384D |
-| Velocidade | <5ms por documento |
-| F1-Score | 90.2% (STS-B benchmark) |
+| Dimensões do índice | 59 chunks a partir de 12 `.txt` |
 
 ### Chunking
 | Parâmetro | Valor |
@@ -175,8 +174,8 @@ Pergunta do Usuário
 | Modelo | `llama-3.3-70b-versatile` |
 | Temperature | 0.05 (determinístico) |
 | Max Tokens | 1200 |
-| Contexto de histórico | Últimos 10 turnos da conversa ativa |
-| Latência P50 | ~800ms |
+| Contexto de histórico | Últimas 10 mensagens da conversa ativa |
+| Latência medida | ver `evals/results/baseline_sprint2.json` |
 
 ### System Prompt
 - **Estrutura de resposta:** `[RESPOSTA DIRETA]` → `[COMO FUNCIONA]` → `[DETALHES TÉCNICOS]` → `[VERIFICAÇÕES]` → `[NOTAS E SEGURANÇA]` → `[PRÓXIMO PASSO]`
@@ -398,13 +397,21 @@ Remove uma conversa e todas as suas mensagens.
 
 ## 📈 Métricas de Performance
 
-| Métrica | Target | Status |
-|---|---|---|
-| Latência P50 | < 1s | ✅ ~800ms |
-| Latência P99 | < 3s | ✅ ~2s |
-| Acurácia Técnica | > 85% | ✅ Baseado em docs oficiais |
-| Cobertura de Tópicos | > 95% | ✅ 12 documentos principais |
-| Taxa de Erro | < 5% | ✅ Validado com test suite |
+**Todo número desta seção sai de `evals/results/`.** Nenhum valor é estimado.
+Para regerar: `python evals/run_legacy.py`, `python evals/run.py`,
+`python evals/avaliar.py` e `python evals/comparativo.py`.
+
+A tabela consolidada, com latência, tokens e taxa de acerto por arquitetura e
+por modelo, está em **`evals/results/comparativo.md`** e em
+**`docs/relatorio_modelos.md`**.
+
+> **Correção de histórico.** Versões anteriores deste README traziam
+> `Latência P50 ~800ms`, `Latência P99 ~2s`, `recall 98%` e
+> `F1-Score 90.2%` como se fossem medições deste sistema. Não eram: nunca
+> houve medição por trás desses números neste repositório, e o F1 de 90,2% é
+> do benchmark STS-B do modelo de embedding `all-MiniLM-L6-v2`, não do
+> ChargeGrid AI. Foram removidos na Sprint 03 e substituídos pelos valores
+> efetivamente medidos.
 
 ---
 
