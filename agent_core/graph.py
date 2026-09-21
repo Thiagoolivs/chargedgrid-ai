@@ -23,8 +23,9 @@ existe gerenciamento manual de historico em lugar nenhum deste pacote.
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, StateGraph
 
-from agent_core.config import build_chat_model, ROUTER_MAX_TOKENS, ROUTER_TEMPERATURE
+from agent_core.config import build_chat_model, build_router_model
 from agent_core.guardrails import guard_in, guard_out
+from agent_core.messages import message_text
 from agent_core.nodes import (
     ROUTE_CONVERSATION,
     ROUTE_OUT_OF_SCOPE,
@@ -70,10 +71,7 @@ def build_graph(chat_model=None, router_model=None, checkpointer=None):
     if router_model is None:
         # O roteador usa o mesmo provedor, mas deterministico e curto: ele so
         # devolve um rotulo, nao texto para o usuario.
-        router_model = build_chat_model(
-            temperature=ROUTER_TEMPERATURE,
-            max_tokens=ROUTER_MAX_TOKENS,
-        )
+        router_model = build_router_model()
 
     if checkpointer is None:
         checkpointer = MemorySaver()
@@ -148,7 +146,7 @@ def answer(session_id, message, graph=None):
     last_message = result["messages"][-1]
 
     return {
-        "response": last_message.content,
+        "response": message_text(last_message),
         "route": result.get("route"),
         "sources": result.get("sources") or [],
         "blocked_reason": result.get("blocked_reason"),

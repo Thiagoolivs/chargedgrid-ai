@@ -16,6 +16,7 @@ Duas camadas, com pesos bem diferentes:
 
 import re
 
+from agent_core.messages import message_text
 from agent_core.prompt import RULES_MARKER, load_base_prompt, strip_accents
 
 BLOCK_REASON_INJECTION = "injection"
@@ -132,7 +133,7 @@ def detect_leak(answer):
 def guard_in(state):
     """No de entrada do grafo. Marca a mensagem como bloqueada ou libera."""
     messages = state["messages"]
-    last_user_message = messages[-1].content if messages else ""
+    last_user_message = message_text(messages[-1]) if messages else ""
 
     matched = detect_injection(last_user_message)
 
@@ -159,7 +160,7 @@ def guard_out(state):
         return {}
 
     last = messages[-1]
-    leaked = detect_leak(getattr(last, "content", ""))
+    leaked = detect_leak(message_text(last))
 
     if not leaked:
         return {}
