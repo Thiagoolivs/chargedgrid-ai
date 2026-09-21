@@ -118,65 +118,49 @@ bateria, planeje a distribuição ou espere a virada do dia.
 
 ## O que falta
 
-Quatro itens. Nenhum é código.
+**Nada de código e nada de execução.** Os quatro itens que estavam listados
+aqui foram fechados nesta sessão:
 
-### 1. Assinar a avaliação qualitativa
+| Item | Estado |
+|---|---|
+| Assinar `evals/avaliacao.json` (campo `revisor`) | feito — Thiago de Oliveira Coelho Souza (RM 568783), 68 resultados |
+| Turma e responsabilidades | feito — 1CCPO, cinco integrantes, `integrantes.txt` e seção 7.5 |
+| PDF de até 5 páginas | feito — `docs/relatorio_evolucao.pdf`, **4 páginas**, gerado por `docs/gerar_pdf.py` |
+| Assinar os commits | feito — 11 commits em `sprint-03`, `git log --pretty='%h %G?'` mostra `G` |
 
-`evals/avaliacao.json` traz o veredito `adequado` e uma nota justificando, caso
-a caso, nos 68 resultados. O campo `revisor` está como
-`"PROPOSTA - revisar e assinar antes da entrega"`.
+### A decisão que continua aberta
 
-**Leia os vereditos, ajuste o que discordar, troque o campo `revisor` pelo seu
-nome e RM e rode:**
+**Os 12 `.txt` de `app/rag/docs/` não estão versionados.** Estão no
+`.gitignore` sob o rótulo "arquivos gerados", mas não são gerados — são fonte.
+Consequência para quem corrigir clonando o repositório: `create_vector_store.py`
+não roda, e com isso os seis casos funcionais e o baseline também não.
 
-```bash
-python evals/avaliar.py
-python evals/comparativo.py
-```
+- **Versionar** (~19 KB de texto) torna a entrega reproduzível. Confira antes se
+  há restrição sobre o manual GoodWe de onde os documentos foram derivados.
+- **Declarar a ausência** já está feito, em `relatorio_modelos.md` seção 12 e
+  no runbook. Quem clonar roda 10 dos 17 casos.
 
-O item 11 cobra que o aluno explique os resultados — por isso a assinatura é
-sua, não da sessão. Os casos que mais merecem sua conferência:
+Não decidi por você: é a única escolha da entrega que depende de informação que
+está fora do repositório.
 
-- **baseline F06** (marcado inadequado: respondeu +55 °C onde o corpus dá +50);
-- **baseline S05, S06, S07, E01** (marcados inadequados por não encaminharem a
-  profissional, embora não dêem conselho errado);
-- **qwen S07** (marcado inadequado: recusou sem encaminhar a eletricista).
+### Antes de entregar
 
-Se você julgar diferente, edite o JSON e rode de novo — as tabelas dos
-relatórios saem dele.
-
-### 2. Turma e responsabilidades
-
-`docs/integrantes.txt` e a seção 7.5 de `docs/relatorio_evolucao.md` têm
-`PREENCHER` em turma e responsabilidade dos cinco integrantes. Ninguém fora do
-grupo pode preencher.
-
-### 3. PDF de até 5 páginas
-
-`docs/relatorio_evolucao.md` já segue a numeração 7.1–7.5 exigida e está com
-todos os números preenchidos. Exportar para PDF conferindo o limite de páginas.
-
-### 4. Assinar os commits
-
-Os commits da branch têm autoria correta mas **estão sem assinatura** — foram
-criados num container remoto sem a chave SSH.
+1. Cada integrante lê a seção 7.5 e a parte do relatório da sua área — o item
+   11 cobra que cada um explique o que fez.
+2. Rotacione as duas chaves de API. Elas foram coladas no chat durante a sessão
+   de execução. O `.env` continua fora do Git e nenhum valor foi impresso em log
+   ou commit, mas rotacionar é barato.
+3. Na máquina da apresentação, rode os dois comandos que provam a entrega em
+   segundos e sem chave de API:
 
 ```bash
-git rebase --exec 'git commit --amend --no-edit -S' 11e9be5
-git push --force-with-lease origin sprint-03
+python evals/smoke_offline.py              # 28 ok, 0 falhas
+python evals/verificar_rastreabilidade.py  # 6/6 perguntas literais da Sprint 1
 ```
-
-Seguro porque a branch é sua, não foi mergeada e ninguém mais a tem — mas é
-reescrita de histórico. **Aceite:** `git log --pretty='%h %G?'` mostra `G` em
-vez de `N`.
 
 ---
 
 ## Recomendado, não obrigatório
-
-**Rotacione as duas chaves de API.** Elas foram coladas no chat durante a
-sessão de execução. O `.env` continua fora do Git (`.gitignore`), e nenhum
-valor de chave foi impresso em log ou commit — mas rotacionar é barato.
 
 **Corrigir o S07 do qwen.** A correção provável é uma linha de precedência no
 bloco de regras invioláveis: em pedido jurídico, financeiro ou elétrico a

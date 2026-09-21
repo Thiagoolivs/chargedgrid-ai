@@ -162,6 +162,7 @@ START → guard_in ─┬─ (bloqueado) ─────────────
 ```bash
 python verificar_ambiente.py                 # o que está pronto e o que falta
 python evals/smoke_offline.py                # 28 verificações, sem chave
+python evals/verificar_rastreabilidade.py    # 6 casos funcionais = test_cases.txt
 python evals/demo_memoria.py --model google/gemini-3.6-flash
 python evals/run_legacy.py --model openai/gpt-oss-20b   # baseline (exige índice)
 python evals/run.py --model google/gemini-3.6-flash --sleep 4
@@ -189,11 +190,14 @@ No Windows, prefixe com `PYTHONIOENCODING=utf-8`.
 Modelo escolhido: **`google/gemini-3.6-flash`, temperatura 0.1** — já é o
 padrão do `.env`. Justificativa na seção 9 de `docs/relatorio_modelos.md`.
 
-Pendente (tudo é decisão humana, nada é código):
-1. assinar `evals/avaliacao.json` (campo `revisor`) e rodar `avaliar.py`;
-2. turma e responsabilidades em `integrantes.txt` e na seção 7.5;
-3. exportar `relatorio_evolucao.md` para PDF (máx. 5 páginas);
-4. assinar os commits.
+**Os quatro itens que estavam pendentes foram fechados:** a avaliação está
+assinada (Thiago, RM 568783), turma 1CCPO e responsabilidades preenchidas, o
+PDF tem 4 páginas (limite 5) e os 11 commits da branch `sprint-03` estão
+assinados com chave SSH (`%G?` = `G`).
+
+Aberto, e é decisão do grupo: **os 12 `.txt` de `app/rag/docs/` não estão
+versionados.** Quem clonar o repositório não roda os casos funcionais nem o
+baseline. Ou entram no repositório, ou a ausência fica declarada na entrega.
 
 ### Nomes de modelo — o catálogo mudou durante a sprint
 

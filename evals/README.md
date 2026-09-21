@@ -17,6 +17,16 @@ são as seis perguntas de `test_cases.txt`, copiadas **literalmente**; o campo
 | F05 | `sprint1_teste_5` | LED vermelho fixo, primeira verificação |
 | F06 | `sprint1_teste_6` | temperatura máxima e proteção IP do GW22K |
 
+Essa rastreabilidade é **verificável, não declarada**:
+
+```bash
+python evals/verificar_rastreabilidade.py   # 6/6 literais, sai 1 se divergir
+```
+
+O script compara caractere a caractere o `turns[0]` de cada caso funcional com
+a pergunta correspondente de `test_cases.txt`, o arquivo da Sprint 1 versionado
+na raiz.
+
 > **Correção de gabarito no F06.** O `esperado` vindo da Sprint 1 citava IP54,
 > IP20 e IK10 — valores que **não existem** em
 > `app/rag/docs/especificacoes_tecnicas.txt`, onde o corpus documenta IP66 no
@@ -76,6 +86,7 @@ em vez de uma taxa — nenhum número é inventado.
 | Arquivo | Papel |
 |---|---|
 | `cases.json` | os 17 casos, com turnos e resultado esperado |
+| `verificar_rastreabilidade.py` | prova que F01–F06 são as perguntas literais da Sprint 1 |
 | `smoke_offline.py` | valida memória, roteamento e guardrails sem chave de API |
 | `demo_memoria.py` | transcript de 3 turnos para o relatório (requisito 3.2) |
 | `fake_model.py` | chat model falso que grava o que recebeu (usado pelo smoke) |

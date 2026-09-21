@@ -1,9 +1,9 @@
 # Plano de 30 minutos — ordem por pontos
 
-> **Atualizado em 21/09/2026, após a sessão de execução.** Os passos de
-> execução estão todos fechados: bateria completa em 4 rodadas, 0 erros,
-> relatórios com números medidos. **O que resta são 4 itens de decisão
-> humana**, listados abaixo em ordem de ponto por minuto.
+> **Atualizado em 21/09/2026, com a entrega fechada.** Bateria completa em 4
+> rodadas, 0 erros, relatórios com números medidos, PDF gerado, avaliação
+> assinada e commits assinados. **Resta uma decisão** — os 12 `.txt` do RAG —
+> e a preparação da apresentação.
 
 ## O que já está feito
 
@@ -24,56 +24,39 @@ Resultado: baseline **47,1%** × agente **100,0%**, com latência caindo de
 
 ---
 
-## O que falta — ordem por ponto por minuto
+## O que falta
 
-| # | Passo | Vale | Tempo | Quem |
-|---|---|---|---|---|
-| 1 | Turma + responsabilidade em `integrantes.txt` e seção 7.5 | **exigência formal**, sem isso perde ponto no item 8 e no 7.5 | 5 min | grupo |
-| 2 | Assinar `evals/avaliacao.json` (campo `revisor`) e rodar `avaliar.py` + `comparativo.py` | valida blocos B, C e D | 10–20 min | Thiago |
-| 3 | Exportar `docs/relatorio_evolucao.md` para PDF (máx. 5 páginas) | **20 pts** do bloco D | 5 min | grupo |
-| 4 | Assinar os commits | item 8 | 3 min | Thiago |
+**Nada de execução.** Os quatro passos que estavam aqui foram fechados:
 
-**Se faltar tempo, corte de baixo para cima — exceto o item 3**, que é
-entregável obrigatório.
+| Passo | Estado |
+|---|---|
+| Assinar `evals/avaliacao.json` e rodar `avaliar.py` + `comparativo.py` | feito — revisor: Thiago, RM 568783 |
+| Turma e responsabilidade em `integrantes.txt` e na 7.5 | feito — 1CCPO, cinco integrantes |
+| PDF de até 5 páginas | feito — `docs/relatorio_evolucao.pdf`, 4 páginas |
+| Assinar os commits | feito — 11 commits, `%G?` = `G` |
 
-### Passo 1 — integrantes (5 min)
+### A única decisão aberta
 
-```
-docs/integrantes.txt           → coluna Turma e bloco RESPONSABILIDADES
-docs/relatorio_evolucao.md     → seção 7.5, colunas Turma e Responsabilidade
-```
+**Os 12 `.txt` de `app/rag/docs/` não estão versionados** (estão no
+`.gitignore` como "arquivos gerados", mas são fonte). Consequência: quem clonar
+o repositório não consegue rodar `create_vector_store.py`, os seis casos
+funcionais nem o baseline.
 
-Cinco nomes e RMs já estão lá. Falta turma e o que cada um fez.
+Duas saídas, ambas defensáveis — escolha antes de entregar:
 
-### Passo 2 — assinar a avaliação (10–20 min)
+- **Versionar.** ~19 KB de texto. Torna a entrega reproduzível por quem corrige.
+  Verifique antes se há restrição de direito autoral sobre o manual GoodWe de
+  onde os documentos foram derivados.
+- **Declarar a ausência.** Já está registrado em `relatorio_modelos.md` seção 12
+  e no runbook. Custa zero minuto, mas quem clonar roda só 10 dos 17 casos.
 
-`evals/avaliacao.json` já traz veredito e justificativa dos 68 resultados. Leia,
-ajuste o que discordar, troque `"revisor"` pelo seu nome e RM, e rode:
+### Antes da apresentação
 
-```bash
-python evals/avaliar.py
-python evals/comparativo.py
-```
-
-**Ordem de conferência se faltar tempo:** os 9 casos marcados `false`
-(baseline F01, F04, F06, M01, M03, S05, S06, S07, E01 e qwen S07). Os `true`
-são os menos discutíveis.
-
-### Passo 3 — PDF (5 min)
-
-`docs/relatorio_evolucao.md` está completo e segue a numeração 7.1–7.5. O
-anexo com os comandos de reprodução pode ser cortado se o arquivo passar de 5
-páginas — os números não podem.
-
-### Passo 4 — assinar os commits (3 min)
-
-```bash
-git rebase --exec 'git commit --amend --no-edit -S' 11e9be5
-git push --force-with-lease origin sprint-03
-```
-
-Aceite: `git log --pretty='%h %G?'` mostra `G` em vez de `N`. Nunca use
-`--no-gpg-sign`.
+1. Cada integrante lê a seção 7.5 e a parte do relatório da sua área (item 11).
+2. `python evals/smoke_offline.py` na máquina da apresentação — 28 ok, sem
+   chave de API, em segundos.
+3. `python evals/verificar_rastreabilidade.py` — prova que as 6 perguntas
+   funcionais são as da Sprint 1, caractere a caractere.
 
 ---
 
