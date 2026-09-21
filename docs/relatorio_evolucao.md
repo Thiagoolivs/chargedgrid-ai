@@ -285,11 +285,14 @@ raso inicial.
 
 ## 7.5 Divisão da equipe
 
-> **PREENCHER.** Ver `docs/integrantes.txt`.
-
 | Nome | RM | Turma | Principal responsabilidade na Sprint 03 |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+| SAMMY DE MOURA SATO | 569182 | `PREENCHER` | `PREENCHER` |
+| JOÃO PEDRO PEREIRA TEIXEIRA | 569937 | `PREENCHER` | `PREENCHER` |
+| JOAO VITOR BELCHIOR DOMINGOS LEITE | 572478 | `PREENCHER` | `PREENCHER` |
+| THIAGO DE OLIVEIRA COELHO SOUZA | 568783 | `PREENCHER` | `PREENCHER` |
+| GABRIEL PEDRO DE SOUZA | 571995 | `PREENCHER` | `PREENCHER` |
+
+> Turma e responsabilidade ficam com o grupo: o item 11 cobra que cada
+> integrante saiba explicar o que fez, então essa atribuição não pode ser
+> inventada por quem não participou da divisão.
