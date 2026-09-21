@@ -1,0 +1,7 @@
+Os JSONs de resultado e o comparativo.md sao gerados aqui por:
+
+    python evals/run_legacy.py     # baseline "antes"
+    python evals/run.py            # agente, nos dois modelos
+    python evals/comparativo.py    # tabela antes x depois
+
+Nenhum numero deve ser escrito a mao neste diretorio.
