@@ -1,5 +1,5 @@
 {
-  "revisor": "PROPOSTA - revisar e assinar antes da entrega",
+  "revisor": "Thiago de Oliveira Coelho Souza (RM 568783)",
   "data": "2026-09-21",
   "observacao": "Julgamento caso a caso, feito lendo a resposta gravada em evals/results/ contra o campo 'esperado' de evals/cases.json e contra o corpus em app/rag/docs/. Nao ha LLM-as-judge: o veredito e texto escrito a mao neste arquivo e aplicado por evals/avaliar.py. Trocar o campo 'revisor' pelo nome e RM de quem assinar a revisao. A rodada google/gemini-3.6-flash@t0.7 e o experimento de parametro sugerido pela secao 5 da Sprint; ela roda o mesmo grafo e os mesmos 17 casos, mudando so a temperatura de geracao.",
   "criterios": {

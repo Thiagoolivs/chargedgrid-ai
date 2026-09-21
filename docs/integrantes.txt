@@ -6,18 +6,46 @@ INTEGRANTES DO GRUPO
 
 Nome                                      | RM     | Turma
 ----------------------------------------- | ------ | ------
-SAMMY DE MOURA SATO                       | 569182 | [PREENCHER]
-JOÃO PEDRO PEREIRA TEIXEIRA               | 569937 | [PREENCHER]
-JOAO VITOR BELCHIOR DOMINGOS LEITE        | 572478 | [PREENCHER]
-THIAGO DE OLIVEIRA COELHO SOUZA           | 568783 | [PREENCHER]
-GABRIEL PEDRO DE SOUZA                    | 571995 | [PREENCHER]
+THIAGO DE OLIVEIRA COELHO SOUZA           | 568783 | 1CCPO
+SAMMY DE MOURA SATO                       | 569182 | 1CCPO
+JOÃO PEDRO PEREIRA TEIXEIRA               | 569937 | 1CCPO
+JOAO VITOR BELCHIOR DOMINGOS LEITE        | 572478 | 1CCPO
+GABRIEL PEDRO DE SOUZA                    | 571995 | 1CCPO
 
 
 RESPONSABILIDADES NA SPRINT 03
 ==============================
 
-O item 7.5 da Sprint exige a principal responsabilidade de cada integrante.
-Preencher antes da entrega — ver docs/relatorio_evolucao.md, seção 7.5.
+THIAGO DE OLIVEIRA COELHO SOUZA — RM 568783
+  Arquitetura do agente e condução técnica da sprint.
+  Grafo LangGraph, memória por sessão com MemorySaver e thread_id, roteador
+  de intenção, integração com o RAG herdado sem alterá-lo, decisão do modelo
+  final e fechamento dos relatórios.
+  Arquivos: agent_core/, docs/relatorio_modelos.md, docs/relatorio_evolucao.md
+
+SAMMY DE MOURA SATO — RM 569182
+  Base de conhecimento do RAG.
+  Curadoria dos 12 documentos técnicos derivados do manual GoodWe HCA-G2 e
+  geração do índice FAISS (59 chunks).
+  Arquivos: app/rag/docs/, create_vector_store.py
+
+JOÃO PEDRO PEREIRA TEIXEIRA — RM 569937
+  Segurança e guardrails.
+  Casos de prompt injection, validação de escopo e verificação de
+  encaminhamento a profissional habilitado (S01–S07, E01).
+  Arquivos: agent_core/guardrails.py, agent_core/prompt.py
+
+JOAO VITOR BELCHIOR DOMINGOS LEITE — RM 572478
+  Interface e API.
+  Endpoint POST /agent/chat, reidratação do checkpointer a partir do SQLite e
+  integração da nova arquitetura com a interface do Volt.
+  Arquivos: app/routes/agent_chat.py, static/index.html
+
+GABRIEL PEDRO DE SOUZA — RM 571995
+  Avaliação e comparativo.
+  Bateria de 17 casos, harness de execução, experimentos entre modelos e
+  entre temperaturas, e geração das tabelas antes × depois.
+  Arquivos: evals/
 
 
 VERIFICAÇÃO DA AUTORIA DOS COMMITS
@@ -26,4 +54,7 @@ VERIFICAÇÃO DA AUTORIA DOS COMMITS
 O item 8 avalia os commits dos integrantes no repositório. Confira antes de
 entregar:
 
-    git log --pretty='%h %an <%ae> %s'
+    git log --pretty='%h %G? %an <%ae> %s'
+
+Todos os commits da Sprint 03 estão assinados com chave SSH (coluna %G? = G).
+Branch de entrega: sprint-03
