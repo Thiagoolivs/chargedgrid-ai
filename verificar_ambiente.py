@@ -115,14 +115,16 @@ def main():
 
     linha(pode_offline, "python evals/smoke_offline.py",
           "28 verificacoes de memoria, roteamento e guardrails. Sem chave.")
-    linha(pode_llm, "python evals/demo_memoria.py",
-          "Transcript de 3 turnos (requisito 3.2). So precisa da GROQ_API_KEY.")
-    linha(pode_llm, "python evals/run.py --model groq/llama-3.3-70b-versatile",
+    linha(pode_llm, "python evals/demo_memoria.py --model google/gemini-3.6-flash",
+          "Transcript de 3 turnos (requisito 3.2). So precisa da chave.")
+    linha(pode_llm, "python evals/run.py --model google/gemini-3.6-flash --sleep 4",
           "Bateria no agente. Sem indice, os casos funcionais rodam sem contexto.")
-    linha(pode_rag, "python evals/run_legacy.py",
+    linha(pode_rag, "python evals/run_legacy.py --model openai/gpt-oss-20b",
           "Baseline Sprint 2 (memoria manual). EXIGE o indice FAISS.")
+    linha(pode_offline, "python evals/avaliar.py",
+          "Aplica os vereditos de evals/avaliacao.json aos resultados.")
     linha(pode_offline, "python evals/comparativo.py",
-          "Tabela antes x depois, depois de preencher 'adequado' nos JSONs.")
+          "Tabela antes x depois, depois de rodar avaliar.py.")
     linha(pode_api, "uvicorn app.main:app --reload",
           "API + interface do Volt em http://localhost:8000/")
 

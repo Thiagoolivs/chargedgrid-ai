@@ -51,10 +51,15 @@ nem em log, nem em diagnóstico.
 
 `app/services/rag_service.py` e `app/services/ai_service.py` **não são
 alterados**. Eles são o "antes" que a seção 6 da Sprint exige comparar. Se
-forem modificados, o comparativo perde a validade.
+forem modificados, o comparativo perde a validade. Confira com
+`git diff app/services/` — precisa sair vazio.
 
 Código novo vai **ao lado**, não por cima. É por isso que `agent_core/` existe
 como pacote irmão de `app/` e consome o RAG como está.
+
+Quando o provedor retira um modelo fixo nesses arquivos, a saída é
+interceptar no harness, não editar o arquivo. Ver
+`evals/run_legacy.py:patch_baseline_model`.
 
 ### 4. Nenhuma métrica inventada
 
@@ -62,8 +67,10 @@ Todo número que aparece em relatório sai de `evals/results/`.
 Se a medição não existe, escreva `PENDENTE` — não estime, não arredonde, não
 cite benchmark de terceiros como se fosse deste sistema.
 
-O campo `adequado` dos resultados é preenchido **a mão** pelo Thiago. Não
-implemente LLM-as-judge: é mais um ponto de falha e a rubrica não pede.
+O campo `adequado` é julgamento **humano**, e vive em `evals/avaliacao.json`,
+fora do código. `evals/avaliar.py` só transporta esse arquivo para dentro dos
+resultados. **Não implemente LLM-as-judge:** é mais um ponto de falha e a
+rubrica não pede. O campo `revisor` do arquivo é assinado pelo Thiago.
 
 ### 5. Não reduzir a bateria
 
@@ -92,6 +99,7 @@ agent_core/                   # Sprint 03
 ├── guardrails.py             # guard_in, guard_out
 ├── prompt.py                 # system prompt + REGRAS INVIOLÁVEIS
 ├── state.py                  # AgentState
+├── messages.py               # message_text: content como str ou lista de blocos
 └── config.py                 # provedor/modelo por variável de ambiente
 evals/                        # bateria e harness
 static/index.html             # interface do Volt
@@ -154,23 +162,59 @@ START → guard_in ─┬─ (bloqueado) ─────────────
 ```bash
 python verificar_ambiente.py                 # o que está pronto e o que falta
 python evals/smoke_offline.py                # 28 verificações, sem chave
-python evals/demo_memoria.py                 # transcript de 3 turnos
-python evals/run_legacy.py                   # baseline Sprint 2 (exige índice)
-python evals/run.py                          # agente, por modelo
+python evals/demo_memoria.py --model google/gemini-3.6-flash
+python evals/run_legacy.py --model openai/gpt-oss-20b   # baseline (exige índice)
+python evals/run.py --model google/gemini-3.6-flash --sleep 4
+python evals/avaliar.py                      # aplica evals/avaliacao.json
 python evals/comparativo.py                  # tabela antes × depois
 uvicorn app.main:app --reload                # API + interface em /
 ```
 
+No Windows, prefixe com `PYTHONIOENCODING=utf-8`.
+
 `smoke_offline.py` deve dar **28 ok, 0 falhas**. Validado contra
 `langgraph==1.2.0` e `langchain-core==1.4.0`, que são os pins da Sprint 2.
 
-## Estado atual
+## Estado atual — 21/09/2026, após a sessão de execução
 
-Pronto: agent_core, guardrails, bateria de 17 casos, harness, interface,
-endpoint, relatórios estruturais.
+**A bateria inteira rodou. Não há bloqueio aberto.**
 
-Pendente: rodar a bateria (falta chave e os 12 `.txt`), preencher `adequado`,
-colar as tabelas nos relatórios, `integrantes.txt`, assinar os commits.
+| Rodada | Taxa | Memória | Segurança | Latência/turno | Erros |
+|---|---|---|---|---|---|
+| Baseline Sprint 2 (`gpt-oss-20b`) | 47,1% | 1/3 | 4/8 | 25,78 s | 0 |
+| Agente `google/gemini-3.6-flash` | **100,0%** | 3/3 | 8/8 | **4,04 s** | 0 |
+| Agente `gemini-3.6-flash@t0.7` | 100,0% | 3/3 | 8/8 | 4,00 s | 0 |
+| Agente `groq/qwen/qwen3.8-27b` | 94,1% | 3/3 | 7/8 | 26,20 s | 0 |
+
+Modelo escolhido: **`google/gemini-3.6-flash`, temperatura 0.1** — já é o
+padrão do `.env`. Justificativa na seção 9 de `docs/relatorio_modelos.md`.
+
+Pendente (tudo é decisão humana, nada é código):
+1. assinar `evals/avaliacao.json` (campo `revisor`) e rodar `avaliar.py`;
+2. turma e responsabilidades em `integrantes.txt` e na seção 7.5;
+3. exportar `relatorio_evolucao.md` para PDF (máx. 5 páginas);
+4. assinar os commits.
+
+### Nomes de modelo — o catálogo mudou durante a sprint
+
+`llama-3.3-70b-versatile`, `llama-3.1-8b-instant` e `gemini-2.0-flash` **não
+existem mais**. Groq hoje: `openai/gpt-oss-120b`, `openai/gpt-oss-20b`,
+`qwen/qwen3.8-27b`, `groq/compound`, `groq/compound-mini`. Google: confirme com
+`python evals/run.py --list-google-models`.
+
+### Duas armadilhas de configuração já resolvidas — não reintroduza
+
+- **Gemini 3.x divide `max_output_tokens` entre raciocínio e texto.** Sem
+  `MODEL_THINKING=0`, o roteador devolve resposta vazia e a geração sai
+  truncada. Está resolvido em `agent_core/config.py`.
+- **Gemini 3.x devolve `content` como lista de blocos, não string.** Use
+  `agent_core/messages.message_text` em qualquer ponto que leia conteúdo de
+  mensagem — nunca `.content` direto.
+
+### Cota da Groq
+
+200.000 tokens por dia, **por modelo**. Uma bateria consome de 68.000 a 96.000.
+Duas rodadas no mesmo modelo Groq não cabem no mesmo dia.
 
 Os 12 `.txt` estão no `.gitignore` (`app/rag/docs/`), classificados como
 "arquivos gerados". Não são gerados — são fonte. Estão na máquina do grupo.
