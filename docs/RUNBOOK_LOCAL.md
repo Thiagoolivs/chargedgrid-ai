@@ -18,12 +18,12 @@ do `torch`.
 git clone https://github.com/Thiagoolivs/chargedgrid-ai.git
 cd chargedgrid-ai
 git fetch --all
-git checkout claude/funny-goodall-cy1nug
+git checkout sprint-03
 ```
 
 > **A branch foi reconstruída sobre `master`** (Sprint 2), não sobre `main`
 > (Sprint 1). Se você já tinha essa branch local, o `git pull` vai recusar —
-> use `git fetch origin && git reset --hard origin/claude/funny-goodall-cy1nug`.
+> use `git fetch origin && git reset --hard origin/sprint-03`.
 > O código agora vive na **raiz**, não em `chargegrid-ai/`.
 
 Se você já tem o repositório clonado:
@@ -31,8 +31,8 @@ Se você já tem o repositório clonado:
 ```bash
 cd chargedgrid-ai
 git fetch origin
-git checkout claude/funny-goodall-cy1nug
-git pull origin claude/funny-goodall-cy1nug
+git checkout sprint-03
+git pull origin sprint-03
 ```
 
 ## 2. Ambiente Python
@@ -265,7 +265,7 @@ criados num container remoto, sem a chave SSH. Na sua máquina, com a chave no
 
 ```bash
 git rebase --exec 'git commit --amend --no-edit -S' 11e9be5
-git push --force-with-lease origin claude/funny-goodall-cy1nug
+git push --force-with-lease origin sprint-03
 ```
 
 Seguro: a branch é sua, não foi mergeada e ninguém mais a tem.

@@ -69,7 +69,7 @@ páginas — os números não podem.
 
 ```bash
 git rebase --exec 'git commit --amend --no-edit -S' 11e9be5
-git push --force-with-lease origin claude/funny-goodall-cy1nug
+git push --force-with-lease origin sprint-03
 ```
 
 Aceite: `git log --pretty='%h %G?'` mostra `G` em vez de `N`. Nunca use

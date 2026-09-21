@@ -163,7 +163,7 @@ criados num container remoto sem a chave SSH.
 
 ```bash
 git rebase --exec 'git commit --amend --no-edit -S' 11e9be5
-git push --force-with-lease origin claude/funny-goodall-cy1nug
+git push --force-with-lease origin sprint-03
 ```
 
 Seguro porque a branch é sua, não foi mergeada e ninguém mais a tem — mas é
@@ -210,5 +210,5 @@ regenere as tabelas.
 | `relatorio_modelos.md` | `docs/relatorio_modelos.md` |
 | Casos de teste (funcional, memória, segurança, injection) | `evals/cases.json` + `evals/results/*.json` |
 | Relatório de evolução (PDF) | `docs/relatorio_evolucao.md` → exportar |
-| Repositório Git com histórico | branch `claude/funny-goodall-cy1nug` |
+| Repositório Git com histórico | branch `sprint-03` |
 | Identificação dos integrantes | `docs/integrantes.txt` |
