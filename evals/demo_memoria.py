@@ -1,7 +1,7 @@
 """Demonstracao de memoria conversacional (requisito 3.2 da Sprint 03).
 
     python evals/demo_memoria.py
-    python evals/demo_memoria.py --caso M01 --model groq/llama-3.3-70b-versatile
+    python evals/demo_memoria.py --caso M01 --model groq/openai/gpt-oss-120b
 
 Roda os casos de memoria turno a turno contra o modelo configurado e grava um
 transcript em evals/results/demo_memoria.md, pronto para colar no relatorio.
@@ -94,9 +94,8 @@ def main():
     args = parser.parse_args()
 
     from agent_core.config import (
-        ROUTER_MAX_TOKENS,
-        ROUTER_TEMPERATURE,
         build_chat_model,
+        build_router_model,
         describe_model,
     )
     from agent_core.graph import build_graph
@@ -107,12 +106,7 @@ def main():
         provider, model_id = args.model.split("/", 1)
 
     chat_model = build_chat_model(provider=provider, model_id=model_id)
-    router_model = build_chat_model(
-        provider=provider,
-        model_id=model_id,
-        temperature=ROUTER_TEMPERATURE,
-        max_tokens=ROUTER_MAX_TOKENS,
-    )
+    router_model = build_router_model(provider=provider, model_id=model_id)
     graph = build_graph(chat_model=chat_model, router_model=router_model)
     model_name = args.model or describe_model()
 

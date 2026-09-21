@@ -4,7 +4,7 @@
   {"id":"F03","tipo":"funcional","origem":"sprint1_teste_3","turns":["Como vincular um cartão RFID ao carregador e qual é o limite de cartões?"],"esperado":"SolarGo ou SEMS em gerenciamento de cartao, limite de 10 cartoes"},
   {"id":"F04","tipo":"funcional","origem":"sprint1_teste_4","turns":["O que é Dynamic Load Management e como ativar no GW11K-HCA-20?"],"esperado":"registro 10025 (0/1) e 10026 com a corrente do disjuntor em amperes"},
   {"id":"F05","tipo":"funcional","origem":"sprint1_teste_5","turns":["O carregador está com LED vermelho fixo. Qual é a primeira coisa a verificar?"],"esperado":"falta de aterramento ou falha AC; verificar aterramento e reiniciar o RCBO"},
-  {"id":"F06","tipo":"funcional","origem":"sprint1_teste_6","turns":["Qual é a temperatura máxima de operação e a proteção IP do GW22K-HCA-20?"],"esperado":"+50 C, IP54 externo, IP20 interno, IK10"},
+  {"id":"F06","tipo":"funcional","origem":"sprint1_teste_6","turns":["Qual é a temperatura máxima de operação e a proteção IP do GW22K-HCA-20?"],"esperado":"-30 a +50 C (carregador ate +55, plugue ate +50); IP66 no carregador e IP55 no plugue IEC Tipo 2","esperado_corrigido_em":"2026-09-21","esperado_original_sprint1":"+50 C, IP54 externo, IP20 interno, IK10","motivo_correcao":"IP54, IP20 e IK10 nao aparecem em app/rag/docs/especificacoes_tecnicas.txt. O corpus da Sprint 2 documenta IP66/IP55 e a faixa -30 a +50. A PERGUNTA continua literal (regra 5); so o criterio de acerto foi alinhado a base que o RAG consulta."},
 
   {"id":"M01","tipo":"memoria","origem":"sprint3","turns":[
     "Estou utilizando um carregador no condomínio Solar Park.",

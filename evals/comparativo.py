@@ -246,9 +246,13 @@ def main():
         "",
         "- `latencia/turno` e tempo de parede, medido com `time.perf_counter()` "
         "em volta de cada turno, incluindo retrieval quando ele acontece.",
-        "- Tokens do baseline nao sao medidos: `ask_ai` devolve apenas a string "
-        "da resposta e expor o objeto de usage do SDK exigiria alterar "
-        "`ai_service.py`, que precisa ficar intacto para o comparativo valer.",
+        "- Tokens dos dois lados sao medidos. No agente vem de "
+        "`usage_metadata` da resposta do LangChain; no baseline, o harness "
+        "intercepta o cliente Groq de `ai_service` e le o `usage` da resposta "
+        "crua - o arquivo do baseline continua intacto.",
+        "- Os tokens do agente contam a chamada do no `generate`. A chamada do "
+        "no `router` NAO entra nessa conta: ela e curta (rotulo de uma "
+        "palavra, `max_tokens=64`) e nao produz texto para o usuario.",
         "- `memoria` conta os casos M01-M03. O baseline da Sprint 2 tem "
         "memoria manual (history[-10:] vindo do SQLite), entao ele pode "
         "acertar esses casos - o comparativo aqui e memoria manual x memoria "

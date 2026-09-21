@@ -1,8 +1,8 @@
 """Roda a bateria de casos contra o agente novo (agent_core), por modelo.
 
     python evals/run.py                              # os dois modelos padrao
-    python evals/run.py --model groq/llama-3.3-70b-versatile
-    python evals/run.py --model google/gemini-2.0-flash --sleep 4
+    python evals/run.py --model groq/openai/gpt-oss-120b
+    python evals/run.py --model google/gemini-3.6-flash --sleep 4
     python evals/run.py --list-google-models         # nomes validos para a chave
 
 Cada caso recebe um thread_id novo (uuid4) e todos os turnos do caso usam o
@@ -28,10 +28,12 @@ from common import (
 
 bootstrap_path()
 
+# Os dois modelos do comparativo da secao 5. Nomes confirmados contra a API
+# em 21/09/2026: o `llama-3.3-70b-versatile` da Sprint 2 foi descontinuado pela
+# Groq e o `gemini-2.0-flash` nao e mais servido a chaves novas.
 DEFAULT_MODELS = [
-    "groq/llama-3.3-70b-versatile",
-    # Nome do Gemini confirmado com --list-google-models antes da rodada.
-    "google/gemini-2.0-flash",
+    "groq/openai/gpt-oss-120b",
+    "google/gemini-3.6-flash",
 ]
 
 # Espera entre turnos, por provedor. O free tier do Gemini limita por minuto.
@@ -42,7 +44,7 @@ def parse_model(spec):
     if "/" not in spec:
         raise ValueError(
             f"Modelo {spec!r} invalido. Use provedor/modelo, "
-            "ex: groq/llama-3.3-70b-versatile"
+            "ex: groq/openai/gpt-oss-120b"
         )
 
     provider, model_id = spec.split("/", 1)
@@ -134,11 +136,7 @@ def run_case(graph, case, model_name, sleep_seconds):
 
 
 def run_model(spec, cases, sleep_seconds=None, temperature=None):
-    from agent_core.config import (
-        ROUTER_MAX_TOKENS,
-        ROUTER_TEMPERATURE,
-        build_chat_model,
-    )
+    from agent_core.config import build_chat_model, build_router_model
     from agent_core.graph import build_graph
 
     provider, model_id = parse_model(spec)
@@ -151,12 +149,7 @@ def run_model(spec, cases, sleep_seconds=None, temperature=None):
         model_id=model_id,
         temperature=temperature,
     )
-    router_model = build_chat_model(
-        provider=provider,
-        model_id=model_id,
-        temperature=ROUTER_TEMPERATURE,
-        max_tokens=ROUTER_MAX_TOKENS,
-    )
+    router_model = build_router_model(provider=provider, model_id=model_id)
     graph = build_graph(chat_model=chat_model, router_model=router_model)
 
     model_name = spec if temperature is None else f"{spec}@t{temperature}"
