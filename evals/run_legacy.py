@@ -22,11 +22,20 @@ Duas caracteristicas do baseline que valem observar nos resultados:
    roteamento - por isso a rota registrada e sempre `rag_sempre`.
 
 Limitacao de medicao: `ask_ai` devolve so a string da resposta, sem o objeto
-de usage do SDK. Medir tokens exigiria alterar `ai_service.py`, que precisa
-ficar intacto para o comparativo valer. Tokens ficam None; latencia e
-qualidade sao medidas normalmente.
+de usage do SDK. Para medir tokens sem tocar em `ai_service.py`, este harness
+intercepta o cliente Groq do modulo e le o `usage` da resposta crua. O codigo
+do baseline continua byte a byte o mesmo.
+
+SUBSTITUICAO DE MODELO (--model): a Groq descontinuou o
+`llama-3.3-70b-versatile` que esta fixo em `ai_service.py:48`; toda chamada
+retorna 404 model_not_found. Sem substituicao nao existe coluna "antes" no
+comparativo da secao 6. A troca e feita AQUI, interceptando o argumento
+`model` na chamada do SDK, e nao no arquivo do baseline - prompt, temperatura,
+janela de historico, corte `if not context` e fluxo continuam identicos. O
+relatorio declara a substituicao.
 """
 
+import argparse
 import asyncio
 import time
 
@@ -41,16 +50,61 @@ from common import (
 
 bootstrap_path()
 
-MODEL_NAME = "baseline-sprint2/ask_ai+llama-3.3-70b-versatile"
+# Modelo escrito em app/services/ai_service.py:48. Mantido aqui so como
+# registro do que a Sprint 2 usava - ele nao existe mais no catalogo da Groq.
+ORIGINAL_MODEL_ID = "llama-3.3-70b-versatile"
+
+# Substituto padrao. Mesmo provedor, para que a comparacao troque arquitetura e
+# modelo, nunca provedor. Declarado no relatorio.
+DEFAULT_MODEL_ID = "openai/gpt-oss-120b"
+
 SLEEP_SECONDS = 0.5
 
+# Preenchido por `patch_baseline_model`. O usage da ultima chamada fica aqui
+# porque `ask_ai` devolve so a string; ler o objeto cru e a unica forma de
+# contar tokens do baseline sem editar o arquivo protegido.
+LAST_USAGE = {"tokens_in": None, "tokens_out": None}
 
-async def run_case(case):
+
+def patch_baseline_model(model_id):
+    """Intercepta o cliente Groq de `ai_service` sem alterar o modulo.
+
+    Faz duas coisas na mesma camada, e so aqui no harness:
+
+    1. substitui o `model=` da chamada, porque o modelo original foi retirado
+       do catalogo do provedor;
+    2. guarda o `usage` da resposta crua, para o comparativo ter tokens dos
+       dois lados.
+
+    O arquivo `app/services/ai_service.py` continua intacto - e ele o "antes"
+    que a secao 6 manda comparar.
+    """
+    from app.services import ai_service
+
+    original_create = ai_service.client.chat.completions.create
+
+    async def create(*args, **kwargs):
+        kwargs["model"] = model_id
+        completion = await original_create(*args, **kwargs)
+
+        usage = getattr(completion, "usage", None)
+        LAST_USAGE["tokens_in"] = getattr(usage, "prompt_tokens", None)
+        LAST_USAGE["tokens_out"] = getattr(usage, "completion_tokens", None)
+
+        return completion
+
+    ai_service.client.chat.completions.create = create
+
+
+async def run_case(case, model_name):
     from app import database
     from app.services.ai_service import ask_ai
     from app.services.rag_service import retrieve_context
 
-    result = empty_result(case, MODEL_NAME)
+    result = empty_result(case, model_name)
+    total_in = 0
+    total_out = 0
+    saw_usage = False
 
     # Uma conversa por caso, como faria um usuario real na interface.
     # database.MAX_CONVERSATIONS poda as mais antigas, mas so no momento da
@@ -68,6 +122,8 @@ async def run_case(case):
             history = [{"role": m["role"], "content": m["content"]} for m in msgs]
 
             retrieval = retrieve_context(turn)
+            LAST_USAGE["tokens_in"] = None
+            LAST_USAGE["tokens_out"] = None
             resposta = await call_with_retry_async(
                 lambda: ask_ai(
                     message=turn,
@@ -89,6 +145,13 @@ async def run_case(case):
             break
 
         elapsed = time.perf_counter() - started
+        tokens_in = LAST_USAGE["tokens_in"]
+        tokens_out = LAST_USAGE["tokens_out"]
+
+        if tokens_in is not None or tokens_out is not None:
+            saw_usage = True
+            total_in += tokens_in or 0
+            total_out += tokens_out or 0
 
         result["rota"].append("rag_sempre")
         result["resposta"] = resposta
@@ -104,8 +167,8 @@ async def run_case(case):
                 "blocked_reason": None,
                 "sources": [s.get("source") for s in retrieval.get("sources", [])],
                 "latencia_s": round(elapsed, 3),
-                "tokens_in": None,
-                "tokens_out": None,
+                "tokens_in": tokens_in,
+                "tokens_out": tokens_out,
             }
         )
 
@@ -117,36 +180,62 @@ async def run_case(case):
         if SLEEP_SECONDS:
             await asyncio.sleep(SLEEP_SECONDS)
 
+    if saw_usage:
+        result["tokens_in"] = total_in
+        result["tokens_out"] = total_out
+
     return result
 
 
-async def run_all():
+async def run_all(model_id):
     from app import database
+
+    patch_baseline_model(model_id)
 
     database.init_db()
     cases = load_cases()
 
-    print(f"{'=' * 68}\nBASELINE (antes) - Sprint 2: {MODEL_NAME}\n{'=' * 68}")
+    model_name = f"baseline-sprint2/ask_ai+{model_id}"
+    substituido = model_id != ORIGINAL_MODEL_ID
+
+    print(f"{'=' * 68}\nBASELINE (antes) - Sprint 2: {model_name}\n{'=' * 68}")
     print("Memoria manual: historico do SQLite, janela das ultimas 10 mensagens.")
+
+    if substituido:
+        print(
+            f"Modelo SUBSTITUIDO: {ORIGINAL_MODEL_ID} (descontinuado na Groq) "
+            f"-> {model_id}."
+        )
+        print("ai_service.py NAO foi alterado: a troca e feita no cliente, aqui.")
+
     print(f"{len(cases)} casos\n")
 
     results = []
 
     for case in cases:
         print(f"  [{case['id']}] {case['tipo']}")
-        results.append(await run_case(case))
+        results.append(await run_case(case, model_name))
 
     write_results(
         RESULTS_DIR / "baseline_sprint2.json",
         {
             "alvo": "baseline",
-            "model": MODEL_NAME,
+            "model": model_name,
             "provider": "groq",
-            "model_id": "llama-3.3-70b-versatile",
+            "model_id": model_id,
+            "model_id_original": ORIGINAL_MODEL_ID,
+            "modelo_substituido": substituido,
+            "motivo_substituicao": (
+                "A Groq removeu llama-3.3-70b-versatile do catalogo; a chamada "
+                "retorna 404 model_not_found. A troca acontece no cliente, "
+                "dentro do harness - app/services/ai_service.py segue intacto."
+            )
+            if substituido
+            else None,
             "temperature": 0.05,
             "memoria": "manual: SQLite + janela de 10 mensagens",
             "roteamento": "nenhum: todo turno passa pelo RAG",
-            "tokens_medidos": False,
+            "tokens_medidos": True,
             "total_casos": len(results),
             "resultados": results,
         },
@@ -157,7 +246,18 @@ async def run_all():
 
 
 def main():
-    asyncio.run(run_all())
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--model",
+        default=DEFAULT_MODEL_ID,
+        help=(
+            "id do modelo Groq usado no lugar do descontinuado "
+            f"(padrao: {DEFAULT_MODEL_ID})"
+        ),
+    )
+    args = parser.parse_args()
+
+    asyncio.run(run_all(args.model))
     return 0
 
 
