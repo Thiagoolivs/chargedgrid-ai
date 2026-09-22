@@ -1,9 +1,60 @@
 # ⚡ ChargeGrid AI
 ### Assistente Técnico Inteligente para Carregadores GoodWe HCA-G2
 
-> **EV Challenge 2026 — GoodWe** | Status: ✅ 100% Completo — Pronto para Entrega
+> **EV Challenge 2026 — GoodWe** · Turma 1CCPO · Branch de entrega: `sprint-03`
 
-Sistema de chatbot especializado com **Retrieval Augmented Generation (RAG)** para suporte técnico em tempo real a carregadores de veículos elétricos da linha GoodWe HCA-G2. Inclui interface web dark mode, memória persistente de conversas e pipeline RAG com guardrails de alucinação.
+Sistema de chatbot especializado com **Retrieval Augmented Generation (RAG)** para suporte técnico em tempo real a carregadores de veículos elétricos da linha GoodWe HCA-G2. Na **Sprint 03** o núcleo conversacional foi refatorado para um **agente LangGraph** com memória gerenciada pelo framework, roteamento por intenção e três camadas de guardrail.
+
+---
+
+## 📦 Entrega da Sprint 03
+
+| Entregável (seção 8) | Onde |
+|---|---|
+| Relatório de evolução (PDF, 4 páginas) | [`docs/relatorio_evolucao.pdf`](docs/relatorio_evolucao.pdf) |
+| Relatório de modelos | [`docs/relatorio_modelos.md`](docs/relatorio_modelos.md) |
+| Casos de teste (funcionais, memória, segurança, injection) | [`evals/cases.json`](evals/cases.json) — 17 casos, 24 turnos |
+| Resultados medidos | [`evals/results/`](evals/results/) — 4 rodadas, 68 resultados |
+| Comparativo antes × depois | [`evals/results/comparativo.md`](evals/results/comparativo.md) |
+| Demonstração de memória (requisito 3.2) | [`evals/results/demo_memoria.md`](evals/results/demo_memoria.md) |
+| Código do agente | [`agent_core/`](agent_core/) |
+| Identificação dos integrantes | [`docs/integrantes.txt`](docs/integrantes.txt) |
+
+### Resultado medido
+
+| | Baseline Sprint 2 | Agente Sprint 03 |
+|---|---|---|
+| Casos adequados | 8/17 — **47,1%** | 17/17 — **100,0%** |
+| Memória (M01–M03) | 1/3 | **3/3** |
+| Segurança e escopo | 4/8 | **8/8** |
+| Latência por turno | 25,78 s | **4,04 s** |
+| Tentativa de prompt injection | ~25 s de inferência | **0,006 s**, sem chamar o LLM |
+
+Modelo escolhido após experimentação: **`google/gemini-3.6-flash`**, temperatura 0.1 — justificativa na [seção 9 do relatório de modelos](docs/relatorio_modelos.md).
+
+**Nenhum número acima foi digitado à mão.** Todos saem de `evals/results/`, gerados por script.
+
+### Conferir em segundos, sem chave de API
+
+```bash
+python evals/smoke_offline.py              # 28 verificações do grafo → 28 ok
+python evals/verificar_rastreabilidade.py  # 6/6 perguntas literais da Sprint 1
+```
+
+Reproduzir a bateria completa: [`docs/RUNBOOK_LOCAL.md`](docs/RUNBOOK_LOCAL.md).
+
+### Arquitetura do agente
+
+```
+START → guard_in ─┬─ (bloqueado) ───────────────────────→ refuse ─┐
+                  └─ (ok) → router ─┬─ tecnica → retrieve → generate ─┤
+                                    ├─ conversa ────────→ generate ─┤
+                                    └─ fora_escopo ─────→ refuse ───┤
+                                                                     ▼
+                                                        guard_out → END
+```
+
+O histórico da Sprint 2 (`master`) e da Sprint 1 (`main`) continua no repositório, sem alteração — é o "antes" que o comparativo exige.
 
 ---
 
