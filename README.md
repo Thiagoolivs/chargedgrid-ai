@@ -31,7 +31,7 @@ Cada linha aponta o arquivo e o requisito da Sprint que ele atende.
 | Identificação dos integrantes | Seção 8 (nome, RM, turma) | [`docs/integrantes.txt`](docs/integrantes.txt) |
 | Perguntas originais da Sprint 1 | Seção 6 (mesmo conjunto de testes) | [`test_cases.txt`](test_cases.txt) |
 | Base de conhecimento do RAG | Fonte dos casos funcionais | [`app/rag/docs/`](app/rag/docs/) — proveniência em [`FONTE.md`](app/rag/docs/FONTE.md) |
-| Histórico de desenvolvimento | Seção 8 (commits dos integrantes) | 18 commits da Sprint 03, todos assinados |
+| Histórico de desenvolvimento | Seção 8 (commits dos integrantes) | Commits da Sprint 03 nesta branch, todos assinados — ver seção 2 |
 
 O histórico das sprints anteriores permanece no repositório sem alteração:
 `master` é a Sprint 2 e `main` é a Sprint 1. A Sprint 2 é o "antes" que o
@@ -237,15 +237,19 @@ pelo menos dois. Nenhum é decorativo; todos mudaram um resultado medido:
 
 ### 8 — Entregáveis e histórico
 
-Ver a tabela da seção 1. Sobre o histórico: são 18 commits da Sprint 03 sobre
-a base da Sprint 2, com autoria do aluno e **assinados com chave SSH**
-registrada no GitHub. Conferir com:
+Ver a tabela da seção 1. Sobre o histórico: os commits da Sprint 03 estão
+nesta branch, sobre a base da Sprint 2, com autoria do aluno e **assinados com
+chave SSH** registrada no GitHub.
 
 ```bash
-git log --pretty='%h %G? %an %s'
+git log --pretty='%h %G? %an %s'          # a coluna %G? deve ser G em todos
+git rev-list --count master..sprint-03    # quantos commits são da Sprint 03
 ```
 
-A coluna `%G?` deve mostrar `G` em todos.
+As três branches estão com o histórico assinado e sem nenhuma atribuição de
+ferramenta de IA nas mensagens de commit. A autoria é do aluno, como o item 8
+exige; o uso de IA durante o desenvolvimento está declarado no item 11 deste
+documento e na seção 11 do enunciado, que o permite.
 
 ### 10 — Requisitos técnicos
 
