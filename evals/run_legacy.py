@@ -125,7 +125,9 @@ async def run_case(case, model_name):
             LAST_USAGE["tokens_in"] = None
             LAST_USAGE["tokens_out"] = None
             resposta = await call_with_retry_async(
-                lambda: ask_ai(
+                # Os defaults fixam os valores desta iteracao no momento em que
+                # a lambda e criada, em vez de ler as variaveis de laco depois.
+                lambda turn=turn, retrieval=retrieval, history=history: ask_ai(
                     message=turn,
                     context=retrieval["context"],
                     history=history,

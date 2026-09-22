@@ -53,6 +53,9 @@ def _rehydrate(graph, conversation_id):
         if state.values.get("messages"):
             return
     except Exception:
+        # Nao ha estado legivel para este thread. Reidratar as cegas poderia
+        # duplicar o historico, entao o caminho seguro e nao reidratar: o turno
+        # segue normalmente e o checkpointer se preenche a partir dele.
         return
 
     stored = database.get_messages(conversation_id)

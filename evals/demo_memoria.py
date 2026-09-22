@@ -43,7 +43,7 @@ def run_caso(graph, case, model_name):
     for index, turn in enumerate(case["turns"], start=1):
         started = time.perf_counter()
         payload = call_with_retry(
-            lambda: answer(thread_id, turn, graph=graph),
+            lambda turn=turn: answer(thread_id, turn, graph=graph),
             label=f"{case['id']} turno {index}",
         )
         elapsed = time.perf_counter() - started
@@ -69,10 +69,12 @@ def run_caso(graph, case, model_name):
     total = len(state.values["messages"])
 
     linhas += [
-        f"**Memória do framework:** o checkpointer acumulou **{total} mensagens** "
-        f"para este `thread_id` ({len(case['turns'])} turnos de usuário + as "
-        "respostas). Nenhuma lista de histórico é mantida pelo código da "
-        "aplicação — o estado vem do `MemorySaver` do LangGraph.",
+        (
+            f"**Memória do framework:** o checkpointer acumulou **{total} mensagens** "
+            f"para este `thread_id` ({len(case['turns'])} turnos de usuário + as "
+            "respostas). Nenhuma lista de histórico é mantida pelo código da "
+            "aplicação — o estado vem do `MemorySaver` do LangGraph."
+        ),
         "",
         "---",
         "",
@@ -120,11 +122,15 @@ def main():
     linhas = [
         "# Demonstração de memória conversacional — Sprint 03",
         "",
-        "Requisito 3.2: memória por sessão usando os recursos do framework, "
-        "com pelo menos 3 turnos de interação.",
+        (
+            "Requisito 3.2: memória por sessão usando os recursos do framework, "
+            "com pelo menos 3 turnos de interação."
+        ),
         "",
-        f"Gerado por `python evals/demo_memoria.py` em "
-        f"{time.strftime('%Y-%m-%d %H:%M:%S')}.",
+        (
+            f"Gerado por `python evals/demo_memoria.py` em "
+            f"{time.strftime('%Y-%m-%d %H:%M:%S')}."
+        ),
         "",
         "---",
         "",

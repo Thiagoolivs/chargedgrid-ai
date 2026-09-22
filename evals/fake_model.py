@@ -41,8 +41,10 @@ class RecordingFakeChatModel:
                 "output_tokens": len(text.split()),
                 "total_tokens": 0,
             }
-        except Exception:
-            pass
+        except Exception as exc:  # noqa: BLE001 - dublê de teste, nunca derruba
+            # `usage_metadata` e read-only em algumas versoes do langchain-core.
+            # O harness ja trata ausencia de usage, entao aqui basta registrar.
+            print(f"      [fake_model] usage nao pode ser anexado: {exc}")
 
         return message
 

@@ -208,8 +208,10 @@ def main():
     partes = [
         "# Comparativo antes x depois - ChargeGrid AI Sprint 03",
         "",
-        "Gerado por `python evals/comparativo.py` a partir dos JSONs de "
-        "`evals/results/`. Nenhum numero desta pagina foi digitado a mao.",
+        (
+            "Gerado por `python evals/comparativo.py` a partir dos JSONs de "
+            "`evals/results/`. Nenhum numero desta pagina foi digitado a mao."
+        ),
         "",
         f"- Casos por modelo: {sumarios[0]['casos']}",
         f"- Modelos comparados: {len(runs)}",
@@ -236,27 +238,37 @@ def main():
         "",
         "## 3. Rota tomada por caso",
         "",
-        "O baseline nao tem roteamento: toda pergunta passa pelo RAG "
-        "(`rag_sempre`), inclusive as conversacionais. O agente escolhe o "
-        "caminho por aresta condicional.",
+        (
+            "O baseline nao tem roteamento: toda pergunta passa pelo RAG "
+            "(`rag_sempre`), inclusive as conversacionais. O agente escolhe o "
+            "caminho por aresta condicional."
+        ),
         "",
         tabela_rotas(runs),
         "",
         "## 4. Observacoes de medicao",
         "",
-        "- `latencia/turno` e tempo de parede, medido com `time.perf_counter()` "
-        "em volta de cada turno, incluindo retrieval quando ele acontece.",
-        "- Tokens dos dois lados sao medidos. No agente vem de "
-        "`usage_metadata` da resposta do LangChain; no baseline, o harness "
-        "intercepta o cliente Groq de `ai_service` e le o `usage` da resposta "
-        "crua - o arquivo do baseline continua intacto.",
-        "- Os tokens do agente contam a chamada do no `generate`. A chamada do "
-        "no `router` NAO entra nessa conta: ela e curta (rotulo de uma "
-        "palavra, `max_tokens=64`) e nao produz texto para o usuario.",
-        "- `memoria` conta os casos M01-M03. O baseline da Sprint 2 tem "
-        "memoria manual (history[-10:] vindo do SQLite), entao ele pode "
-        "acertar esses casos - o comparativo aqui e memoria manual x memoria "
-        "gerenciada pelo framework, nao ausencia x presenca.",
+        (
+            "- `latencia/turno` e tempo de parede, medido com `time.perf_counter()` "
+            "em volta de cada turno, incluindo retrieval quando ele acontece."
+        ),
+        (
+            "- Tokens dos dois lados sao medidos. No agente vem de "
+            "`usage_metadata` da resposta do LangChain; no baseline, o harness "
+            "intercepta o cliente Groq de `ai_service` e le o `usage` da resposta "
+            "crua - o arquivo do baseline continua intacto."
+        ),
+        (
+            "- Os tokens do agente contam a chamada do no `generate`. A chamada do "
+            "no `router` NAO entra nessa conta: ela e curta (rotulo de uma "
+            "palavra, `max_tokens=64`) e nao produz texto para o usuario."
+        ),
+        (
+            "- `memoria` conta os casos M01-M03. O baseline da Sprint 2 tem "
+            "memoria manual (history[-10:] vindo do SQLite), entao ele pode "
+            "acertar esses casos - o comparativo aqui e memoria manual x memoria "
+            "gerenciada pelo framework, nao ausencia x presenca."
+        ),
         "",
     ]
 

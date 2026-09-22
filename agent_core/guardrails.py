@@ -105,7 +105,7 @@ def _leak_signatures():
             continue
 
         # Cabecalhos e marcadores de secao sao formato de resposta, nao segredo.
-        if stripped.startswith("#") or stripped.startswith("["):
+        if stripped.startswith(("#", "[")):
             continue
 
         signatures.append(_normalize(stripped))

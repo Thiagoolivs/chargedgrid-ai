@@ -201,6 +201,10 @@ def retrieve(state):
     try:
         retrieval = retrieve_context(question)
     except Exception:
+        # Qualquer falha de busca (indice corrompido, erro de embedding) vira
+        # contexto vazio: o `generate` ainda responde a partir do historico, e
+        # o relatorio registra a degradacao. Deixar a excecao subir derrubaria
+        # o turno inteiro por uma falha que nao e do usuario.
         return {"context": "", "sources": []}
 
     return {

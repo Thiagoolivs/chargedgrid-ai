@@ -13,7 +13,6 @@ MESMO thread_id - e isso que exercita a memoria. A avaliacao qualitativa
 import argparse
 import time
 import uuid
-from pathlib import Path
 
 from common import (
     RESULTS_DIR,
@@ -85,7 +84,9 @@ def run_case(graph, case, model_name, sleep_seconds):
 
         try:
             payload = call_with_retry(
-                lambda: answer(thread_id, turn, graph=graph),
+                # `turn=turn` fixa o valor desta iteracao no momento em que a
+                # lambda e criada, em vez de ler a variavel de laco depois.
+                lambda turn=turn: answer(thread_id, turn, graph=graph),
                 label=f"{model_name} {case['id']} turno {index}",
             )
         except Exception as exc:

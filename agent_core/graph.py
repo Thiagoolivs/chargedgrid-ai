@@ -29,7 +29,6 @@ from agent_core.messages import message_text
 from agent_core.nodes import (
     ROUTE_CONVERSATION,
     ROUTE_OUT_OF_SCOPE,
-    ROUTE_TECHNICAL,
     make_generate_node,
     make_router_node,
     refuse,
