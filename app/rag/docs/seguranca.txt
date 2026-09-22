@@ -1,0 +1,73 @@
+# Seguranca eletrica, instalacao segura e protecoes
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 3-5, 20-23, 26-30, 35-36, 60, 63-65, e datasheet HCA G2.
+
+Regras gerais:
+- O carregador e equipamento eletrico; operacao inadequada pode causar ferimentos ou danos a propriedade.
+- Leia e siga as instrucoes e precaucoes de seguranca antes de qualquer operacao.
+- As informacoes do manual nao substituem rotulos do produto nem precaucoes de seguranca.
+- Todos os rotulos e marcacoes de advertencia devem permanecer visiveis apos instalacao.
+
+Alta tensao:
+- Existe alta tensao durante a operacao do carregador.
+- Desconecte toda energia de entrada e desligue o produto antes de trabalhar nele.
+- Aguarde 5 minutos apos desligar para descarga completa dos componentes.
+- Use EPI adequado antes de qualquer operacao.
+
+Conexao eletrica:
+- Desconecte o interruptor upstream antes da conexao eletrica.
+- Nao trabalhe com o equipamento energizado.
+- Todas as conexoes eletricas devem ser feitas por profissionais qualificados.
+- Operacoes, cabos e pecas devem cumprir leis e regulamentos locais.
+- Use sapatos de seguranca, luvas de seguranca e luvas isolantes durante conexoes eletricas.
+- Cabos do mesmo tipo devem ser amarrados e separados de cabos de tipos diferentes.
+- Evite cabos emaranhados ou cruzados.
+- Reserve comprimento adequado de cabo para evitar tensao excessiva na conexao.
+- Ao crimpar terminais, a parte condutora deve tocar completamente os terminais; nao crimpar revestimento como contato.
+
+Risco de conexao incorreta:
+- Conecte cabos de entrada CA aos terminais corretos L1, L2, L3, N e PE.
+- Conexao incorreta pode danificar o carregador.
+- Todos os nucleos devem estar inseridos nos terminais, sem cobre exposto.
+- Cabos devem estar firmes para evitar superaquecimento.
+
+Requisitos de instalacao:
+- Nao instalar proximo a materiais inflamaveis, explosivos ou corrosivos.
+- Evitar local facil de tocar, pois a superficie pode atingir alta temperatura.
+- Verificar canos de agua e cabos dentro da parede antes de furar.
+- Instalar em local coberto, bem ventilado e com espaco para operacao.
+- Suporte deve ser nao inflamavel, a prova de fogo e firme para suportar o peso.
+- Recomendado instalar verticalmente.
+- Nao instalar de cabeca para baixo, inclinado para frente, inclinado para tras ou horizontalmente.
+
+Durante carregamento:
+- Nao mover o veiculo eletrico.
+- Pressionar botao de parada de emergencia se houver anormalidade.
+- Nao carregar em dias de chuva e trovoes.
+- Confirmar que plugue e porta do EV estejam secos se for necessario carregar.
+- Manter criancas longe do carregador.
+- Nao carregar quando houver falha ou cabo quebrado.
+
+Manutencao:
+- Antes de manutencao, desligue o carregador.
+- Desconecte o RCBO entre o carregador e a rede ou inversor.
+- Certifique-se de que o carregador esteja desligado antes de desmontar.
+- Use EPI adequado.
+
+Protecoes:
+- Corrente residual AC 30 mA + DC 6 mA.
+- Sobrecorrente.
+- Sobretensao.
+- Subtensao.
+- Curto-circuito.
+- Vazamento.
+- Aterramento.
+- Excesso de temperatura.
+- EMS.
+- DPS CA Tipo III.
+- Desligamento de emergencia integrado.
+
+RCBO:
+- GW7K-HCA-20: RCBO Tipo A curva C, 30 mA, 40 A, CA 230 V, 2P.
+- GW11K-HCA-20: RCBO Tipo A curva C, 30 mA, 25 A, CA 400 V, 4P.
+- GW22K-HCA-20: RCBO Tipo A curva C, 30 mA, 40 A, CA 400 V, 4P.

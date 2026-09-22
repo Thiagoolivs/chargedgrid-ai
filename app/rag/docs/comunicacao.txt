@@ -1,0 +1,68 @@
+# Comunicacao, rede, Wi-Fi, LAN, RS485 e Modbus TCP
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 7, 30-34, 41-46, 63-65, e Mapa MODBUS_HCA G2 paginas 2-9.
+
+Interfaces de comunicacao:
+- Bluetooth.
+- Wi-Fi.
+- RS485.
+- LAN.
+- Modbus TCP.
+
+Distancias e cenarios:
+- O diagrama do manual mostra Bluetooth com distancia menor que 10 m.
+- O diagrama mostra conexoes de comunicacao com referencias de ate 15 m e ate 100 m conforme topologia.
+- O carregador pode operar em cenarios com PV e bateria ou sem PV/bateria.
+- O carregador comunica com inversor, medidor inteligente, medidor MID, roteador, SEMS Portal e aplicativo SolarGo conforme a topologia instalada.
+
+RS485:
+- As portas RS485_A1/B1 do carregador sao usadas para comunicacao com o inversor.
+- Para a porta RS485 especifica do inversor, consultar o manual do inversor correspondente.
+- O manual mostra tambem RS485_A2/B2 para medidor MID conforme diagrama.
+- Ao conectar linha de comunicacao, a definicao da porta e o equipamento precisam ser compativeis.
+- O caminho do cabo deve evitar fontes de interferencia e linhas de energia.
+- Portas nao usadas devem ser tampadas para manter a protecao do carregador.
+- Apos ligar os dispositivos, confirme no SolarGo se o status de conexao do inversor esta verde solido. Caso contrario, a conexao com o inversor falhou.
+
+LAN:
+- A porta LAN conecta o cabo de comunicacao de um roteador.
+- O cabo de comunicacao LAN deve ser providenciado pelo instalador.
+- Quando LAN-2 nao estiver em uso, tampar com o plugue de borracha a prova d'agua fornecido.
+
+Wi-Fi via SolarGo:
+1. Acesse More > Communication Setting.
+2. Toque em Network Name e selecione a rede correta.
+3. Informe a Password da rede.
+4. Habilite DHCP quando o roteador estiver em IP dinamico.
+5. Desabilite DHCP quando usar IP estatico ou switch que exija configuracao manual.
+6. Se DHCP estiver desabilitado, configure IP Address, Subnet Mask, Gateway Address e DNS Server.
+7. Toque em Save.
+
+Status de comunicacao no SolarGo:
+- Inverter: indica comunicacao com o inversor.
+- Meter: indica comunicacao com o medidor.
+- WiFi: indica comunicacao com o roteador.
+- Cloud: indica comunicacao com a nuvem.
+
+Protocolo Modbus:
+- Protocolo documentado: Modbus TCP.
+- Tipos de dados documentados: STR, S16, U16, S32, U32.
+- Acesso: RO leitura, WO escrita, RW leitura e escrita.
+- Formato SCI no mapa: baudrate 9600, bytesize 8, stopbits 1, parity N.
+- Codigos de excecao Modbus: 0x0001 Illegal Function, 0x0002 Illegal Data Address, 0x0003 Illegal Data Value, 0x0004 Slave Device Failure.
+
+Registros uteis de comunicacao e versao:
+- 10050 Charging pile SVN Software version: RO, U16.
+- 10051 HF-WIFI-BLE module software version: RO, STR 5, formato xx.xx.xx.
+- 10056 Hardware Version: RO, STR 2, ASCII.
+- 10058 Power Specifications of Charging Piles: RO, U16, 0 = 7 kW, 1 = 11 kW, 2 = 22 kW.
+- 10059 Type of Charging Piles: RO, U16, 0 = trifasico, 1 = monofasico.
+- 10592 Safety version: RO, STR 2, formato XX.XX.XXXX.
+
+OTA:
+- 20000-20095 Send the firmware upgrade URL+MD5: WO, STR 96.
+- 20000-20079: URL HTTPS em ASCII terminada com '\0'.
+- 20080-20095: MD5 em ASCII.
+- 20096 Upgrade trigger bit: WO, U16.
+- 20097 Upgrade state: RO, U16; 0 sem upgrade, 1 download completo, 2 falha no download, 3 upgrade bem-sucedido, 4 falha no upgrade, 7 atualizando.
+- 20098 Upgrade percentage: RO, U16.

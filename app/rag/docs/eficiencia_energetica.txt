@@ -1,0 +1,55 @@
+# Eficiencia energetica, PV Priority, PV+BATT e controle dinamico
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 9-15, 45-47, 53-59, e Mapa MODBUS_HCA G2 paginas 4-5.
+
+Objetivo do sistema:
+- O HCA-G2 pode usar energia fotovoltaica e bateria para carregar o veiculo eletrico.
+- O carregador se comunica com inversor e medidor para usar energia solar e gerenciar dinamicamente a carga.
+- Em modos solares, as cargas domesticas ou de backup tem prioridade; o excedente e direcionado ao EV.
+
+Modo Rapido:
+- Usa rede eletrica, paineis solares ou bateria conforme disponibilidade.
+- A potencia de saida padrao e a potencia nominal do carregador.
+- O usuario pode ajustar a potencia sem exceder o limite nominal do modelo.
+
+Modo Prioridade PV:
+- Usa somente energia fotovoltaica excedente para carregar o veiculo eletrico.
+- As cargas domesticas tem prioridade no consumo da energia fotovoltaica.
+- Se o excedente fotovoltaico nao for suficiente e Ensure Minimum Charging Power estiver desligado, o carregamento pode ser interrompido.
+
+Modo PV + BATT:
+- Usa excedente fotovoltaico e bateria para carregar o veiculo.
+- As cargas domesticas continuam tendo prioridade.
+- A bateria pode apoiar o carregamento quando configurado e disponivel.
+
+Ensure Minimum Charging Power:
+- Funcao disponivel nos modos Prioridade PV e PV + BATT.
+- Quando ligada, rede ou bateria apoiam o carregamento para manter a potencia minima necessaria.
+- Potencia minima indicada: 1,4 kW para carregador de 7 kW; 4,2 kW para carregadores de 11 kW e 22 kW.
+- Quando desligada, o carregamento e interrompido se o excedente fotovoltaico nao estiver mais disponivel.
+- Registro Modbus 10024: 0 desligado, 1 ligado.
+
+Dynamic Load Control / Dynamic Load Management:
+- Depois de ativado, o carregador ajusta a velocidade de carregamento ou pausa o carregamento com base nos dados do medidor e na corrente de conexao a rede configurada.
+- O objetivo e evitar o disparo do fusivel ou disjuntor principal.
+- Quando a corrente real consumida se aproxima da corrente de conexao definida, o carregador reduz a potencia ou pausa.
+- O carregador reinicia automaticamente quando a diferenca entre a corrente de conexao e a corrente consumida atende as condicoes de reinicio.
+- Registro Modbus 10025: Dynamic Load Management Enable Function Status, 0 desligado, 1 ligado.
+- Registro Modbus 10026: Household Circuit Breaker Rated Current, corrente nominal do disjuntor da residencia em A, faixa 0 a 2000.
+
+Grid Power Limit:
+- Limita a potencia de pico comprada da rede.
+- A quantidade de eletricidade consumida pelo EV nao deve exceder o limite de potencia de pico configurado.
+
+Alternancia de fase:
+- Disponivel apenas para carregadores trifasicos GW11K-HCA-20 e GW22K-HCA-20.
+- Quando ligada e a potencia total de entrada fica abaixo de 4,2 kW, o carregador alterna automaticamente para monofasico para evitar consumo da rede ou desligamento.
+- Potencia minima no modo monofasico: 1,4 kW.
+- Tempo aproximado de alternancia: 3 minutos.
+- Quando desligada, o carregador permanece em trifasico.
+- Registro Modbus 10023: Single/Three-Phase Switching Enable Function Status, 0 desligado, 1 ligado.
+
+Perguntas comuns:
+- Para ativar Dynamic Load Control, habilite a funcao no app e configure a corrente nominal do disjuntor. Em Modbus, use 10025 = 1 e ajuste 10026 conforme o disjuntor.
+- Para desativar Dynamic Load Control, use 10025 = 0.
+- Para manter carga solar minima, habilite Ensure Minimum Charging Power ou 10024 = 1.

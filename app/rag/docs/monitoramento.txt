@@ -1,0 +1,63 @@
+# Monitoramento, LEDs, status e alarmes
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 10, 17, 21, 39, 41, 61-62, e Mapa MODBUS_HCA G2 paginas 3 e 9.
+
+Indicador LED:
+- Verde ligado: carregador em modo de espera.
+- Verde piscando: sistema do carregador sendo atualizado.
+- Azul ligado: carregador carregando.
+- Vermelho ligado: ocorreu uma falha.
+
+LED em anormalidade RFID:
+- Vermelho aceso por 2 segundos: cartao encostado antes de conectar o plugue ao veiculo.
+- Vermelho piscando duas vezes: carregador e cartao nao correspondem.
+
+Status operacional:
+- Ocioso.
+- Em preparacao.
+- Carregando.
+- Em espera.
+- Carregamento completo.
+- Alarme.
+
+SolarGo - campos de monitoramento:
+- Device Status: mostra o status do carregador, como Idle plugged ou Charging.
+- Communication Status: mostra comunicacao com inversor, medidor, Wi-Fi e nuvem.
+- Alarm Record: permite verificar alarmes.
+- Start/End Charging: permite iniciar ou encerrar carregamento.
+
+Quando ha falha:
+- O carregador mostra vermelho.
+- O manual orienta fazer login no SEMS Portal ou aplicativo PV Master para obter solucao de problemas detalhada.
+- Se os metodos recomendados nao resolverem, contatar servico pos-venda.
+
+Registros Modbus de falha:
+- 10001 AC Fault Bytes 01, RO U16:
+  bit0 Emergency stop alarm.
+  bit1 Overvoltage protection.
+  bit2 Overcurrent protection.
+  bit3 Undervoltage protection.
+  bit4 Connector fault.
+  bit5 S2 disconnected.
+  bit6 Environmental overheating fault.
+  bit7 Charging gun overheating fault.
+- 10002 AC Fault Bytes 02, RO U16:
+  bit0 Door access fault.
+  bit1 Grounding fault.
+  bit2 Handshake timeout.
+  bit3 RF card communication fault.
+  bit4 Serial display communication fault.
+  bit5 On-board meter IC communication fault.
+  bit6 Output relay fault.
+  bit7 Charging gun lock fault.
+- 30000 em diante Alarm Information IOT, RO U16: informacoes de alarme IOT para analise conforme protocolo backend.
+
+Informacoes para coleta antes do suporte:
+- Numero de serie.
+- Versao de software.
+- Data de instalacao.
+- Hora da falha.
+- Frequencia da falha.
+- Ambiente de instalacao, inclusive clima.
+- Fotos e videos quando possivel.
+- Situacao da rede eletrica.

@@ -1,0 +1,74 @@
+# Especificacoes tecnicas GoodWe HCA-G2
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 6, 63-65, e datasheet HCA G2.
+
+Modelos suportados:
+- GW7K-HCA-20: carregador CA monofasico de 7 kW.
+- GW11K-HCA-20: carregador CA trifasico de 11 kW.
+- GW22K-HCA-20: carregador CA trifasico de 22 kW.
+
+Entrada eletrica:
+- GW7K-HCA-20: 230 VCA no manual ou 220 VCA no datasheet para Brasil, L/N/PE, 32 A, 50/60 Hz.
+- GW11K-HCA-20: 400 VCA no manual ou 380 VCA no datasheet para Brasil, 3L/N/PE, 16 A, 50/60 Hz.
+- GW22K-HCA-20: 400 VCA no manual ou 380 VCA no datasheet para Brasil, 3L/N/PE, 32 A, 50/60 Hz.
+
+Saida CA:
+- GW7K-HCA-20: 7.000 W, 230 V, 32 A, 50/60 Hz.
+- GW11K-HCA-20: 11.000 W, 400 V, 16 A, 50/60 Hz.
+- GW22K-HCA-20: 22.000 W, 400 V, 32 A, 50/60 Hz.
+
+Caracteristicas gerais:
+- Temperatura operacional: -30 a +50 graus Celsius; observacao do manual: carregador -30 a +55 e plugue de carregamento ate 50.
+- Umidade relativa: 5% a 95%, sem condensacao.
+- Altitude operacional maxima: 2.000 m.
+- Resfriamento: conveccao natural.
+- Interface de usuario: WLAN + aplicativo + LED.
+- Metodos de inicializacao: aplicativo, RFID e AUTO Start.
+- Comunicacao: Bluetooth, Wi-Fi, RS485 e LAN.
+- Protocolo de comunicacao: Modbus TCP.
+- Dimensoes: 208 x 450 x 170 mm.
+- Ruido: menor que 20 dB.
+- Potencia em espera: menor que 6,5 W.
+- Grau de protecao do carregador: IP66.
+- Grau de protecao do plugue IEC Tipo 2: IP55.
+- Cabo de saida: 6 m, com opcao de 7,5 m.
+- Conector: IEC Tipo 2.
+- Instalacao: interna ou externa.
+- Montagem: parede ou piso com suporte opcional.
+- Classe de protecao: Classe I.
+- MTBF: 100.000 h.
+- Pais de fabricacao: China.
+
+Protecoes integradas:
+- Corrente residual: AC 30 mA + DC 6 mA.
+- Sobrecorrente.
+- Sobretensao.
+- Excesso de temperatura.
+- Falha de aterramento.
+- DPS CA Tipo III.
+- Desligamento de emergencia integrado.
+- Protecao contra subtensao, curto-circuito, vazamento, aterramento, EMS e surto/descarga atmosferica conforme descricao do manual.
+
+RCBO e RCD:
+- O manual indica RCBO Tipo A, curva C.
+- Corrente de disparo do RCBO: 30 mA.
+- GW7K-HCA-20: RCBO 40 A, CA 230 V, 2 polos.
+- GW11K-HCA-20: RCBO 25 A, CA 400 V, 4 polos.
+- GW22K-HCA-20: RCBO 40 A, CA 400 V, 4 polos.
+- O manual tambem informa que e necessario RCD externo tipo A.
+
+Cabos de entrada CA:
+- GW7K-HCA-20: cabo externo CA de tres nucleos, cobre, 105 C, 1.000 V, diametro externo 13 a 14 mm, secao 6 mm2.
+- GW11K-HCA-20: cabo externo CA de cinco nucleos, cobre, 105 C, 1.000 V, diametro externo 12,6 a 17,3 mm, secao 4 a 6 mm2.
+- GW22K-HCA-20: cabo externo CA de cinco nucleos, cobre, 105 C, 1.000 V, diametro externo 16,3 a 17,3 mm, secao 6 mm2.
+
+Modos de trabalho:
+- Carregamento rapido.
+- Prioridade PV.
+- PV + bateria.
+- Carregamento programado.
+- Controle de carga dinamico.
+
+Acessorios:
+- O datasheet informa 2 cartoes RFID.
+- O manual tambem lista medidor MID como opcional para medicoes de consumo e reembolso.

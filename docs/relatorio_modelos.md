@@ -583,10 +583,14 @@ prompt. Um resumo em outras palavras passa.
    justificando — mas quem repetir a avaliação pode divergir.
 6. **Roteador custa uma chamada extra de LLM por turno.** Não domina a latência
    medida, mas o custo isolado dele não foi medido.
-7. **Base de conhecimento fora do repositório.** `app/rag/docs/` está no
-   `.gitignore` e `app/rag/vector_store/` é gerado. Sem os 12 `.txt` não há
-   como rodar `create_vector_store.py` nem os casos funcionais. Decidir se o
-   corpus entra no repositório ou se há uma fonte externa documentada.
+7. **Corpus versionado, PDFs originais não.** Os 12 `.txt` de `app/rag/docs/`
+   entraram no repositório em 21/09/2026, com a proveniência em
+   `app/rag/docs/FONTE.md`, para que a entrega seja reproduzível por quem
+   clonar. Os PDFs da GoodWe de onde foram derivados não são redistribuídos, e
+   `app/rag/vector_store/` continua gerado. Limitação que fica: o corpus é uma
+   reorganização feita pelo grupo, não o manual original — divergências entre
+   os dois se propagam para o retrieval sem alarme, como se viu no gabarito do
+   F06 (seção 5.2).
 8. **Cota diária da Groq condiciona a reprodutibilidade.** 200.000 tokens por
    dia por modelo. Repetir a bateria completa exige planejar a distribuição
    entre modelos ou esperar a virada do dia.

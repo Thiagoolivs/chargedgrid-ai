@@ -111,9 +111,14 @@ python evals/comparativo.py
 
 ## 5b. Os 12 documentos do RAG
 
-Eles estão **no `.gitignore`** da branch `master`, linha 26, sob o cabeçalho
-"RAG: arquivos gerados (não versionar)". Não são gerados — são fonte. Por isso
-não existem em commit nenhum. Coloque-os em `app/rag/docs/`.
+**Já vêm com o clone.** Estavam no `.gitignore` da branch `master`, sob o
+rótulo "arquivos gerados", mas não são gerados — são fonte. Entraram no
+repositório em 21/09/2026, com a proveniência declarada em
+`app/rag/docs/FONTE.md`: derivados dos PDFs técnicos fornecidos pela GoodWe
+para o EV Challenge.
+
+Os PDFs originais **não** são redistribuídos: `app/rag/source_pdfs/` continua
+no `.gitignore`, assim como `app/rag/vector_store/`, que é gerado.
 
 **Os nomes importam.** `rag_service.py` mapeia palavra-chave para arquivo
 (`KEYWORD_SOURCE_HINTS`), então renomear quebra o direcionamento do retrieval.
@@ -135,16 +140,12 @@ app/rag/docs/
 └── modbus_reference.txt
 ```
 
-Depois de colocá-los:
+Gere o índice a partir deles:
 
 ```bash
-python create_vector_store.py
+python create_vector_store.py    # Embeddings criados: 59 chunks processados
 python verificar_ambiente.py     # deve ficar tudo OK
 ```
-
-> **Decidam se o corpus entra no repositório.** São arquivos-fonte, não
-> gerados — diferente do `vector_store/`, que está no `.gitignore` de
-> propósito. Sem eles versionados, ninguém consegue reproduzir a entrega.
 
 ---
 

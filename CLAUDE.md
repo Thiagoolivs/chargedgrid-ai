@@ -92,7 +92,7 @@ app/                          # Sprint 2 — NÃO ALTERAR o que é baseline
 ├── services/ai_service.py    # ask_ai(message, context, history) — baseline
 ├── services/rag_service.py   # retrieve_context(...) — o RAG, intocado
 ├── prompts/system_prompt.txt # lido, nunca editado
-└── rag/docs/                 # 12 .txt — GITIGNORADOS, ausentes do repositório
+└── rag/docs/                 # 12 .txt — fonte do RAG, VERSIONADOS (ver FONTE.md)
 agent_core/                   # Sprint 03
 ├── graph.py                  # monta e compila o grafo
 ├── nodes.py                  # router, retrieve, generate, refuse
@@ -220,7 +220,14 @@ existem mais**. Groq hoje: `openai/gpt-oss-120b`, `openai/gpt-oss-20b`,
 200.000 tokens por dia, **por modelo**. Uma bateria consome de 68.000 a 96.000.
 Duas rodadas no mesmo modelo Groq não cabem no mesmo dia.
 
-Os 12 `.txt` estão no `.gitignore` (`app/rag/docs/`), classificados como
-"arquivos gerados". Não são gerados — são fonte. Estão na máquina do grupo.
+Os 12 `.txt` de `app/rag/docs/` **estão versionados** desde 21/09/2026, com a
+proveniência declarada em `app/rag/docs/FONTE.md`: derivados dos PDFs técnicos
+fornecidos pela GoodWe para o EV Challenge. Quem clonar o repositório roda
+`create_vector_store.py` e reproduz os números. Gerado é o
+`app/rag/vector_store/`, que continua no `.gitignore` — junto com
+`app/rag/source_pdfs/`, porque os PDFs originais não são redistribuídos.
+
+**Não renomeie esses arquivos:** `rag_service.py` mapeia palavra-chave para
+nome de arquivo e renomear quebra o direcionamento do retrieval.
 
 Detalhes e critérios de aceite: `docs/HANDOFF_SESSAO_LOCAL.md`.

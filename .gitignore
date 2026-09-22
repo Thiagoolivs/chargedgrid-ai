@@ -20,10 +20,13 @@ build/
 *.sqlite
 *.sqlite3
 
-# === RAG: arquivos gerados (não versionar) ===
+# === RAG ===
+# vector_store/ e gerado por create_vector_store.py a partir de docs/.
+# source_pdfs/ guarda os PDFs originais da GoodWe, que nao sao redistribuidos.
+# app/rag/docs/ NAO entra aqui: os 12 .txt sao a fonte do RAG, versionados
+# para que a entrega seja reproduzivel por quem clonar o repositorio.
 app/rag/vector_store/
 app/rag/source_pdfs/
-app/rag/docs/
 
 # === Logs ===
 *.log

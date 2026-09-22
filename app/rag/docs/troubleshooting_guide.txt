@@ -1,0 +1,79 @@
+# Guia de troubleshooting do GoodWe HCA-G2
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 21, 39, 61-62, e Mapa MODBUS_HCA G2 pagina 3.
+
+Sinal inicial:
+- LED vermelho ligado indica falha.
+- Para detalhes, entre no SEMS Portal ou PV Master conforme orientacao do manual.
+- Se os procedimentos abaixo nao resolverem, contate o servico pos-venda.
+
+Antes de acionar suporte, colete:
+- Numero de serie do carregador.
+- Versao de software.
+- Data de instalacao.
+- Hora da falha.
+- Frequencia da falha.
+- Ambiente de instalacao, incluindo clima.
+- Fotos e videos para auxiliar a analise.
+- Situacao da rede eletrica.
+
+Falha 1: falha na conexao da pistola
+- Causa: carregador desconectado durante o carregamento.
+- Solucao: reconectar o carregador.
+- Registro relacionado: 10001 bit4 Connector fault.
+
+Falha 2: parada de emergencia
+- Causa: botao de parada de emergencia pressionado.
+- Solucao: soltar o botao.
+- Registro relacionado: 10001 bit0 Emergency stop alarm.
+
+Falha 3: erro de aterramento
+- Causa: cabo de aterramento da entrada CA desconectado.
+- Solucao: verificar e reconectar o cabo de aterramento.
+- Registro relacionado: 10002 bit1 Grounding fault.
+
+Falha 4: temperatura ambiente
+- Causa: temperatura do carregador acima de 98 graus.
+- Solucao: o problema e removido apos resfriamento; o carregador entra em espera.
+- Registro relacionado: 10001 bit6 Environmental overheating fault ou bit7 Charging gun overheating fault conforme origem.
+
+Falha 5: sobretensao
+- Causa: entrada CA com sobretensao.
+- Solucao: o problema e removido quando a tensao volta ao normal; o carregador entra em espera.
+- Registro relacionado: 10001 bit1 Overvoltage protection.
+
+Falha 6: subtensao
+- Causa: entrada CA com subtensao.
+- Solucao: aguardar normalizacao da tensao e verificar rede eletrica.
+- Registro relacionado: 10001 bit3 Undervoltage protection.
+
+Falha 7: sobrecorrente
+- Causa: conexao de saida em curto-circuito ou com sobrecorrente.
+- Solucao: o problema e removido depois que a saida volta ao normal; verificar instalacao se persistir.
+- Registro relacionado: 10001 bit2 Overcurrent protection.
+
+Falha 8: tempo limite de desvio
+- Causas possiveis: bateria do EV totalmente carregada; temperatura ambiente muito baixa e bateria nao pode ser carregada; conexao do carregador anormal.
+- Solucoes: verificar pelo software se a bateria concluiu carregamento; pre-aquecer o EV cerca de 5 minutos antes de carregar em ambiente muito frio; desconectar e reconectar o conector apos cerca de 15 segundos.
+
+Falha 9: tempo limite de preparacao
+- Causa: comunicacao do sinal CP nao foi bem-sucedida.
+- Solucoes: verificar se o EV esta totalmente carregado; desconectar e reconectar o conector apos cerca de 15 segundos; acionar revendedor ou pos-venda se persistir.
+- Registro relacionado: 10002 bit2 Handshake timeout.
+
+Falha 10: contator soldado
+- Causa: componente interno com defeito.
+- Solucao: reiniciar o carregador; se nao resolver, contatar revendedor ou pos-venda.
+
+Falhas 11 a 16:
+- 11 Falha no medidor.
+- 12 Falha de corrente de fuga.
+- 13 Erro de leitura.
+- 14 Erro EEPROM.
+- 15 Erro de flash.
+- 16 Falha no detector de vazamento.
+- Para essas falhas, reinicie quando aplicavel e acione revendedor ou pos-venda se o problema persistir.
+
+RFID:
+- Vermelho por 2 segundos: cartao foi passado antes de conectar o plugue ao EV. Conectar o plugue primeiro e passar o cartao depois.
+- Vermelho piscando duas vezes: cartao nao corresponde ao carregador. Vincular o cartao ao carregador antes do uso.

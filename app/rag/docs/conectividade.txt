@@ -1,0 +1,48 @@
+# Conectividade com inversores, medidores, roteador e SEMS
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 7-8, 30-36, 50-56.
+
+Componentes de uma instalacao:
+- Carregador HCA-G2.
+- Inversor GoodWe grid-tie ou hibrido.
+- Bateria compativel com inversores hibridos GoodWe, quando houver.
+- RCBO entre carregador e rede/inversor.
+- Medidor inteligente entregue com o inversor ou adquirido do fabricante.
+- Medidor MID opcional para coleta de consumo do carregador.
+- Roteador para conexao LAN/Wi-Fi.
+- SEMS Portal em nuvem.
+- Aplicativo SolarGo.
+- Veiculo eletrico.
+
+Cenarios de uso:
+- Com PV e bateria: carregador conectado ao ecossistema fotovoltaico, bateria, inversor, medidor, roteador, SEMS Portal e aplicativo.
+- Sem PV ou bateria: carregador conectado a rede eletrica, RCBO, roteador, SEMS Portal e aplicativo.
+- O carregador pode se comunicar com inversor para usar energia fotovoltaica no carregamento.
+- O carregador pode obter dados do medidor inteligente por meio do inversor para gerenciamento dinamico da carga.
+- O carregador pode se conectar a medidor MID certificado para gerar dados de consumo usados em faturas reembolsaveis.
+
+Compatibilidade de inversores indicada no manual:
+- SDT G2: modelos como GW5K-DT, GW6K-DT, GW8K-DT, GW10KT-DT, GW12KT-DT, GW15K-DT, ARM 59.183 ou acima.
+- SDT G3: modelos GW4000-SDT-30 ate familias SDT-30/31/C30/P31 listadas no manual; versoes como 05.56 ou acima, 0.6 ou acima, ou 0.0 ou acima conforme modelo.
+- ET G1 5-10 kW: familia GW5K-ET, GW6.5K-ET, GW8K-ET, GW10K-ET e variantes, ARM 30.290 ou acima.
+- ET G2 6-15 kW: GW6000-ET-20, GW8000-ET-20, GW9900-ET-20, GW10K-ET-20, GW12K-ET-20, GW15K-ET-20, ARM 13.436 ou acima.
+- ET 15-30 kW: GW12KL-ET, GW15K-ET, GW18KL-ET, GW20K-ET, GW29.9K-ET, GW30K-ET, GW25K-ET, ARM 13.436 ou acima.
+- ES G2 3-6 kW: GW3000-ES-20, GW3600-ES-20, GW5000-ES-20, GW6000-ES-20 e variantes M/BR, ARM 10.427 ou acima.
+- EHB: GW9.99K-EHB-AU-G11, GW5K-EHB-AU-G11, GW8.6K-EHB-AU-G11, ARM 31.309 ou acima.
+- EH Plus: GW3600N-EH, GW5000N-EH-BE, GW5000N-EH, GW6000N-EH.
+- ESA: GW3K-EHA-G20, GW3.6K-EHA-G20, GW5K-EHA-G20, GW6K-EHA-G20, GW8K-EHA-G20, GW10K-EHA-G20, GW9.999K-EHA-G20, ARM 02.100 ou acima.
+
+Conexao com inversor:
+- Use RS485_A1/B1 do carregador para comunicacao com inversor.
+- Confirme no SolarGo que o status de conexao do inversor esteja verde solido apos energizar.
+- Se nao ficar verde solido, a conexao do inversor falhou e deve ser verificada.
+
+Conexao com medidor:
+- O medidor inteligente fornece dados para gerenciamento dinamico de carga.
+- O medidor MID e opcional e coleta dados de consumo do carregador para reembolso de faturas.
+- O manual indica conexao de medidor MID pelas portas RS485_A2/B2 conforme topologia.
+
+Conexao com nuvem:
+- Configure Wi-Fi ou LAN corretamente para que o carregador acesse o servidor.
+- No SEMS Portal, crie a estacao e adicione dispositivos por QR code ou dados manuais.
+- A regiao da estacao deve ser correta para evitar falha de criacao.

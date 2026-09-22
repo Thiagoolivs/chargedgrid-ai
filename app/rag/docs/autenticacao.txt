@@ -1,0 +1,58 @@
+# Autenticacao, RFID, AUTO Start e acesso por aplicativos
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 10, 17, 21, 38-45, 48, 50-52, 58, e Mapa MODBUS_HCA G2 pagina 7.
+
+Metodos de inicializacao:
+- Aplicativo SolarGo.
+- Aplicativo SEMS Portal.
+- Cartao RFID.
+- AUTO Start.
+
+RFID:
+- O carregador possui area de cartao RFID para encostar o cartao e ativar o carregamento.
+- O cartao RFID precisa ser vinculado ao carregador antes do uso.
+- Cada carregador pode ser vinculado a ate 10 cartoes RFID.
+- O datasheet informa 2 cartoes RFID como acessorios.
+
+Sequencia correta para carregar com RFID:
+1. Conecte o plugue de carregamento ao veiculo eletrico.
+2. Depois, encoste o cartao RFID na area de cartao do carregador.
+3. O carregador inicia o carregamento do veiculo.
+
+Erros comuns de RFID por LED:
+- Luz vermelha acesa por 2 segundos: o cartao foi encostado antes de conectar o plugue ao veiculo eletrico.
+- Luz vermelha piscando duas vezes: o carregador e o cartao nao correspondem; o cartao nao esta vinculado ao carregador.
+
+Gerenciamento de cartoes:
+- Pelo SolarGo, a funcao aparece em More / Mais, na area de gerenciamento de cartao de veiculo eletrico.
+- Pelo SEMS Portal, o manual mostra configuracao de gerenciamento de cartoes RFID.
+- Cartoes RFID podem ser adicionados e removidos.
+- Limite documentado: 10 cartoes por carregador.
+
+AUTO Start:
+- Quando AUTO Start esta ligado, o veiculo comeca a carregar assim que o plugue e conectado.
+- Nesse modo nao e necessario passar cartao RFID.
+- Condicao: nao pode haver carregamento programado definido.
+- No SolarGo, AUTO Start aparece na pagina principal.
+- Registro Modbus relacionado a modo de inicio: 10076 Charging Start Mode, somente leitura, com valores 0 RFID, 1 backend, 2 admin, 3 VIN, 4 wallet, 5 plug-charge, 6 scheduled, 7 Bluetooth.
+
+Acesso SolarGo:
+- Requisitos: Android 4.3 ou posterior, iOS 9.0 ou posterior, internet e compatibilidade com WLAN ou Bluetooth.
+- Para login local, o carregador deve estar ligado e funcionando corretamente.
+- No SolarGo, selecione Bluetooth, atualize a lista com Search Device e encontre o equipamento pelo numero de serie.
+- Na primeira conexao Bluetooth, aceite o pareamento.
+- Senha inicial: goodwe2022.
+- O manual recomenda alterar a senha no primeiro login e periodicamente.
+- Apos 3 tentativas incorretas, a conta e bloqueada; e necessario contatar o pos-venda da GoodWe para obter a super senha.
+
+Acesso SEMS Portal:
+- Requisitos: Android 4.3 ou posterior, iOS 9.0 ou posterior, internet e navegacao online.
+- O usuario final deve registrar conta no SEMS Portal.
+- A regiao da estacao deve ser selecionada corretamente, pois selecao incorreta pode causar falha na criacao da estacao.
+- Para criar a estacao, acesse Create Plant, preencha os dados obrigatorios e adicione os dispositivos por QR code ou manualmente.
+
+Registros Modbus de RFID:
+- 10500 Charging card number: RO, STR 7, UID fixo de 14 bytes ASCII; preencher com '\0' se faltar comprimento.
+- 10507 Add RFID card number: RW, STR 7, adiciona um cartao por vez, UID de 14 bytes.
+- 10514 Delete the RFID card number: RW, STR 7, remove um cartao por vez, UID de 14 bytes.
+- 10521 Query the RFID card number: RO, STR 70, retorna todos os cartoes armazenados; armazenamento fixo de 10 cartoes, 14 bytes cada.

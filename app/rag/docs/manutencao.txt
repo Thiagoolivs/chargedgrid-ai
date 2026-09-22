@@ -1,0 +1,33 @@
+# Manutencao, desligamento, desmontagem e descarte
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 18-19 e 60.
+
+Desligar o carregador:
+- Desligue o carregador antes de operacoes e manutencao.
+- Caso contrario, o carregador pode ser danificado ou pode ocorrer choque eletrico.
+- Desconecte o RCBO entre o carregador e a rede ou inversor.
+
+Desmontagem:
+1. Certifique-se de que o carregador esteja desligado.
+2. Use EPI adequado antes de qualquer operacao.
+3. Desconecte todos os cabos, incluindo cabos CA e comunicacao.
+4. Remova o carregador da placa de montagem.
+5. Remova a placa de montagem.
+6. Guarde o carregador adequadamente se ele for usado depois.
+
+Manutencao de rotina:
+- Botao de parada de emergencia: ligar e desligar o EMS tres vezes consecutivas para confirmar funcionamento. Periodicidade: uma vez a cada 6 meses.
+- Conexao eletrica: verificar se cabos estao bem conectados, quebrados ou com nucleo de cobre exposto. Periodicidade: uma vez a cada 6 a 12 meses.
+- Vedacao: verificar se terminais e portas estao devidamente vedados; vedar novamente orificio de cabo se nao estiver vedado ou estiver grande demais. Periodicidade: uma vez a cada 6 a 12 meses.
+
+Armazenamento:
+- Se o carregador nao for instalado ou usado imediatamente, nao retire a embalagem externa nem descarte o dessecante.
+- Guarde em local limpo.
+- Garanta temperatura e umidade adequadas, sem condensacao.
+- Respeite altura e direcao de empilhamento da embalagem.
+- Empilhe cuidadosamente para evitar queda.
+- Se o carregador ficar armazenado por longo periodo, deve ser verificado por profissionais antes de uso.
+
+Descarte:
+- Se o carregador nao funcionar mais, descarte de acordo com requisitos locais para residuos de equipamentos eletricos.
+- O carregador nao pode ser descartado com lixo domestico.

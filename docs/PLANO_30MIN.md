@@ -35,20 +35,11 @@ Resultado: baseline **47,1%** × agente **100,0%**, com latência caindo de
 | PDF de até 5 páginas | feito — `docs/relatorio_evolucao.pdf`, 4 páginas |
 | Assinar os commits | feito — 11 commits, `%G?` = `G` |
 
-### A única decisão aberta
+### Nenhuma decisão aberta
 
-**Os 12 `.txt` de `app/rag/docs/` não estão versionados** (estão no
-`.gitignore` como "arquivos gerados", mas são fonte). Consequência: quem clonar
-o repositório não consegue rodar `create_vector_store.py`, os seis casos
-funcionais nem o baseline.
-
-Duas saídas, ambas defensáveis — escolha antes de entregar:
-
-- **Versionar.** ~19 KB de texto. Torna a entrega reproduzível por quem corrige.
-  Verifique antes se há restrição de direito autoral sobre o manual GoodWe de
-  onde os documentos foram derivados.
-- **Declarar a ausência.** Já está registrado em `relatorio_modelos.md` seção 12
-  e no runbook. Custa zero minuto, mas quem clonar roda só 10 dos 17 casos.
+Os 12 `.txt` do RAG **foram versionados** em 21/09/2026, com a proveniência
+declarada em `app/rag/docs/FONTE.md`. Quem clonar o repositório roda
+`create_vector_store.py` e reproduz os 17 casos.
 
 ### Antes da apresentação
 

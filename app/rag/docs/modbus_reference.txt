@@ -1,0 +1,81 @@
+# Referencia Modbus TCP do GoodWe HCA-G2
+
+Fonte: Mapa MODBUS_HCA G2 V1.0.15 2025-09-12, paginas 2-9.
+
+Protocolo:
+- Protocolo de comunicacao: Modbus TCP.
+- Tipos: STR, S16, U16, S32, U32.
+- Acesso: RO leitura, WO escrita, RW leitura e escrita.
+- Formato SCI documentado: baudrate 9600, bytesize 8, stopbits 1, parity N.
+- Codigos de excecao: 0x0001 Illegal Function, 0x0002 Illegal Data Address, 0x0003 Illegal Data Value, 0x0004 Slave Device Failure.
+
+Controle de energia e carga:
+- 10000 EMS Energy Dispatch, RW U16, faixa 0 a 1. 0 operacao normal; 1 ajusta a potencia da estacao ao minimo para carregamento.
+- 10020 Reservation Status, RW U16, 0 nao efetivo, 1 valido uma vez, 2 permanentemente valido.
+- 10021 Reservation Start Time for Charging, RW U16. Unidade hora/minuto. Exemplo 0x0C1E representa 12:30. Se nao houver agendamento, retorna FF FF.
+- 10022 Reservation Charging Duration, RW U16, minutos.
+- 10023 Single/Three-Phase Switching Enable Function Status, RW U16, 0 desligado, 1 ligado.
+- 10024 Maintain Minimum Charging Power Enable Function Status, RW U16, 0 desligado, 1 ligado.
+- 10025 Dynamic Load Management Enable Function Status, RW U16, 0 desligado, 1 ligado.
+- 10026 Household Circuit Breaker Rated Current, RW U16, unidade A, faixa 0 a 2000.
+- 10027 Maximum Charging Capacity, RW U16, fator 10, kWh, faixa 0 a 2000.
+- 10028 Minimum Charging Capacity, RW U16, fator 10, kWh, faixa 0 a 2000.
+- 10029 Maximum Charging Power, RW U16, fator 10, kW, faixa 14 a 220.
+- 10060 Turn on/off charging, RW U16, 1 desligar, 2 ligar. Use este registro para ligar ou iniciar o carregamento via Modbus, escrevendo 2; use 1 para desligar ou parar.
+
+Falhas:
+- 10001 AC Fault Bytes 01, RO U16:
+  bit0 parada de emergencia.
+  bit1 protecao contra sobretensao.
+  bit2 protecao contra sobrecorrente.
+  bit3 protecao contra subtensao.
+  bit4 falha do conector.
+  bit5 S2 desconectado.
+  bit6 sobretemperatura ambiente.
+  bit7 sobretemperatura da pistola/conector de carregamento.
+- 10002 AC Fault Bytes 02, RO U16:
+  bit0 falha de acesso da porta.
+  bit1 falha de aterramento.
+  bit2 timeout de handshake.
+  bit3 falha de comunicacao do cartao RF.
+  bit4 falha de comunicacao do display serial.
+  bit5 falha de comunicacao do medidor IC embarcado.
+  bit6 falha do rele de saida.
+  bit7 falha de trava da pistola.
+- 30000 em diante Alarm Information IOT, RO U16: informacoes de alarme IOT para analise conforme protocolo backend.
+
+Identificacao e versoes:
+- 10050 Charging pile SVN Software version, RO U16.
+- 10051 HF-WIFI-BLE module software version, RO STR 5, formato xx.xx.xx.
+- 10056 Hardware Version, RO STR 2, ASCII.
+- 10058 Power Specifications of Charging Piles, RO U16: 0 = 7 kW, 1 = 11 kW, 2 = 22 kW.
+- 10059 Type of Charging Piles, RO U16: 0 = trifasico, 1 = monofasico.
+- 10592 Safety version, RO STR 2, formato XX.XX.XXXX.
+
+Sessao, energia e historico:
+- 10061 Charge amount, RO U32, fator 100, valido em modo de operacao.
+- 10063 Charge duration, RO U32, unidade segundos, valido durante carregamento.
+- 10065 Accumulated historical electricity, RO U32, fator 10, kWh.
+- 10162 Charging End Time, RO U16, bytes altos ano e baixos mes.
+- 10163 Charging End Time, RO U16, bytes altos dia e baixos hora.
+- 10164 Charging End Time, RO U16, bytes altos minuto e baixos segundo.
+- 10166 Charging Duration, RO U32, segundos.
+- 10168 Reason for Charging Termination, RO U32.
+- 10170 Meter Reading Before Charging, RO U32, 0,01 kWh.
+- 10172 Meter Reading After Charging, RO U32, 0,01 kWh.
+- 10174 Current Charging Record Index, RO U32.
+- 10176 Charging amount is cleared, RO U16; setting 1 zera o volume de carregamento.
+
+RFID:
+- 10500 Charging card number, RO STR 7, UID fixo de 14 bytes ASCII, preencher com '\0' se necessario.
+- 10507 Add RFID card number, RW STR 7, adiciona cartao RFID, um UID de 14 bytes por vez.
+- 10514 Delete the RFID card number, RW STR 7, remove cartao RFID, um UID de 14 bytes por vez.
+- 10521 Query the RFID card number, RO STR 70, retorna todos os cartoes; armazenamento fixo de 10 cartoes com 14 bytes cada.
+
+OTA:
+- 20000-20095 Send the firmware upgrade URL+MD5, WO STR 96.
+- 20000-20079 URL HTTPS em ASCII terminada com '\0'.
+- 20080-20095 MD5 em ASCII.
+- 20096 Upgrade trigger bit, WO U16.
+- 20097 Upgrade state, RO U16: 0 sem upgrade, 1 download completo, 2 falha no download, 3 upgrade bem-sucedido, 4 falha no upgrade, 7 atualizando.
+- 20098 Upgrade percentage, RO U16.

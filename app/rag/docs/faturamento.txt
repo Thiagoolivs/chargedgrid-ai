@@ -1,0 +1,37 @@
+# Faturamento, medicao de energia e reembolso
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 6-8, 25, 34, 48, 61, 65, e Mapa MODBUS_HCA G2 paginas 5-6.
+
+Medidor MID:
+- O HCA-G2 pode se conectar a um medidor MID certificado.
+- O medidor MID coleta dados de consumo de energia do carregador de veiculo eletrico.
+- Esses dados podem ser utilizados para reembolso de faturas.
+- O medidor MID e opcional; o manual orienta contatar o fabricante para adquirir, se necessario.
+
+Aplicacao de faturamento:
+- O datasheet informa que os metodos de autenticacao e os dados do carregador oferecem transparencia na cobranca dos custos de energia para divisao de contas e reembolso.
+- O medidor MID e o historico de energia ajudam a separar o consumo do EV do restante da instalacao.
+
+Distancia por kWh:
+- O SolarGo e o SEMS Portal permitem configurar a proporcao de conversao entre energia e quilometragem.
+- Tambem e possivel manter a configuracao padrao.
+
+Registros Modbus de energia e sessao:
+- 10061 Charge amount: RO, U32, fator 100, disponivel em modo de operacao.
+- 10063 Charge duration: RO, U32, unidade segundos, valido durante status de carregamento.
+- 10065 Accumulated historical electricity: RO, U32, fator 10, kWh, energia historica acumulada.
+- 10166 Charging Duration: RO, U32, segundos.
+- 10168 Reason for Charging Termination: RO, U32, motivo do termino de carregamento conforme protocolo backend.
+- 10170 Meter Reading Before Charging: RO, U32, unidade 0,01 kWh.
+- 10172 Meter Reading After Charging: RO, U32, unidade 0,01 kWh.
+- 10174 Current Charging Record Index: RO, U32.
+- 10176 Charging amount is cleared: RO, U16; configuracao 1 zera o volume de carregamento conforme nota do mapa.
+
+Dados para suporte em caso de divergencia:
+- Numero de serie do carregador.
+- Versao de software.
+- Data de instalacao.
+- Hora da falha ou divergencia.
+- Frequencia da ocorrencia.
+- Situacao da rede eletrica.
+- Fotos ou videos quando ajudarem a analise.

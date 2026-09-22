@@ -128,20 +128,15 @@ aqui foram fechados nesta sessão:
 | PDF de até 5 páginas | feito — `docs/relatorio_evolucao.pdf`, **4 páginas**, gerado por `docs/gerar_pdf.py` |
 | Assinar os commits | feito — 11 commits em `sprint-03`, `git log --pretty='%h %G?'` mostra `G` |
 
-### A decisão que continua aberta
+### A entrega está reproduzível ponta a ponta
 
-**Os 12 `.txt` de `app/rag/docs/` não estão versionados.** Estão no
-`.gitignore` sob o rótulo "arquivos gerados", mas não são gerados — são fonte.
-Consequência para quem corrigir clonando o repositório: `create_vector_store.py`
-não roda, e com isso os seis casos funcionais e o baseline também não.
+Os 12 `.txt` de `app/rag/docs/` **foram versionados** em 21/09/2026 (60 KB de
+texto), com a proveniência em `app/rag/docs/FONTE.md`: derivados dos PDFs
+técnicos que a GoodWe forneceu para o EV Challenge. Os PDFs originais não são
+redistribuídos — `app/rag/source_pdfs/` segue no `.gitignore`, assim como o
+`vector_store/`, que é gerado.
 
-- **Versionar** (~19 KB de texto) torna a entrega reproduzível. Confira antes se
-  há restrição sobre o manual GoodWe de onde os documentos foram derivados.
-- **Declarar a ausência** já está feito, em `relatorio_modelos.md` seção 12 e
-  no runbook. Quem clonar roda 10 dos 17 casos.
-
-Não decidi por você: é a única escolha da entrega que depende de informação que
-está fora do repositório.
+Quem clonar o repositório roda `create_vector_store.py` e reproduz os 17 casos.
 
 ### Antes de entregar
 

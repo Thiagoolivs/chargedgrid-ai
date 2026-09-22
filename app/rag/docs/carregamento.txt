@@ -1,0 +1,68 @@
+# Carregamento e operacao do GoodWe HCA-G2
+
+Fonte: Manual do usuario GoodWe HCA G2 V1.5 2025-11-11, paginas 9-15, 35-38, 43-48 e 53-59.
+
+Visao geral:
+- O HCA-G2 e um carregador residencial CA para veiculos eletricos.
+- Ele pode carregar usando energia da rede, energia fotovoltaica e bateria, conforme o modo configurado.
+- A potencia de saida padrao e a potencia nominal do modelo, mas o usuario pode ajustar a potencia desde que nao exceda a potencia nominal.
+- A potencia maxima efetiva tambem depende do OBC do veiculo eletrico.
+
+Limites minimos:
+- Corrente minima de partida por fase: 6 A.
+- Potencia minima em carregamento monofasico: 1,4 kW.
+- Potencia minima em carregamento trifasico: 4,2 kW.
+- Se um carregador trifasico alimentar um veiculo que aceita apenas monofasico, a potencia maxima fica limitada a 1/3 da potencia nominal do carregador.
+- Se um carregador trifasico alimentar um veiculo que aceita apenas bifasico, a potencia maxima fica limitada a 2/3 da potencia nominal do carregador.
+
+Estados operacionais:
+- Ocioso.
+- Em preparacao.
+- Carregando.
+- Em espera.
+- Carregamento completo.
+- Alarme.
+
+Modos de carregamento:
+- Rapido: usa eletricidade da rede, dos paineis solares ou das baterias. A potencia de saida e nominal por padrao e pode ser ajustada pelo usuario ate o limite nominal.
+- Prioridade de energia fotovoltaica: usa somente o excedente de energia fotovoltaica para carregar o veiculo. As cargas da casa ou do sistema de backup tem prioridade sobre a energia solar.
+- Energia fotovoltaica + bateria: usa excedente fotovoltaico e bateria para carregar o veiculo. As cargas domesticas tem prioridade.
+- Carregamento programado: permite configurar janela de carregamento pelo SolarGo ou SEMS Portal.
+- AUTO Start: inicia o carregamento automaticamente quando o plugue e conectado, sem passar cartao RFID, desde que nao exista carregamento programado configurado.
+
+Como iniciar pelo aplicativo SolarGo ou SEMS Portal:
+1. Conecte o plugue de carregamento na porta do veiculo eletrico.
+2. Abra SolarGo ou SEMS Portal.
+3. Selecione o carregador.
+4. Use Start Charging para iniciar.
+5. Use End Charging para encerrar quando necessario.
+
+Avisos durante o carregamento:
+- Nao mova o veiculo eletrico durante o carregamento.
+- Pressione o botao de parada de emergencia se ocorrer anormalidade durante o carregamento.
+- Nao carregue em dias de chuva e trovoes.
+- Se for necessario carregar, confirme que o plugue e a porta do veiculo estejam secos.
+- Mantenha criancas longe do carregador.
+- Nao carregue se houver falha ou cabo quebrado.
+- Apos terminar, desconecte o plugue, recoloque a tampa e enrole o cabo no suporte falso ou no carregador.
+
+Reinicio do carregamento:
+- Se o EV nao aceitar carregamento automatico e o processo for interrompido, pode ser necessario reconectar o plugue.
+- No modo AUTO Start, reconectar o plugue reinicia o carregamento.
+- Nos outros modos, o carregamento pode ser reiniciado via aplicativo ou passando o cartao RFID.
+
+Configuracoes de energia no SolarGo:
+- Limit Output Power: define a potencia de carregamento da estacao. Se nao configurado, usa a potencia nominal.
+- Ensure Minimum Charging Power: mantem a potencia minima usando suporte da rede ou bateria quando o excedente solar nao for suficiente.
+- Grid Power Limit: limita a potencia de pico comprada da rede para que o consumo do EV nao exceda o limite configurado.
+- Grid Compliance Limit: recurso relacionado a EnWG 14a, permitindo atenuacao temporaria de cargas controlaveis para 4,2 kW quando aplicavel.
+
+Registros Modbus relacionados:
+- 10020 Reservation Status: 0 inativo, 1 valido uma vez, 2 permanentemente valido.
+- 10021 Reservation Start Time for Charging: horario de inicio em hexadecimal; exemplo 0x0C1E representa 12:30.
+- 10022 Reservation Charging Duration: duracao em minutos.
+- 10024 Maintain Minimum Charging Power Enable Function Status: 0 desligado, 1 ligado.
+- 10027 Maximum Charging Capacity: capacidade maxima, fator 10, kWh.
+- 10028 Minimum Charging Capacity: capacidade minima, fator 10, kWh.
+- 10029 Maximum Charging Power: potencia maxima, fator 10, kW.
+- 10060 Turn on/off charging: 1 desligar, 2 ligar. Para ligar ou iniciar o carregamento por Modbus, escrever valor 2.
