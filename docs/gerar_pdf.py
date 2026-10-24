@@ -22,6 +22,8 @@ from reportlab.platypus import (
 
 BASE = Path(sys.argv[1] if len(sys.argv) > 1 else "docs/relatorio_evolucao.md")
 OUT = Path(sys.argv[2] if len(sys.argv) > 2 else "docs/relatorio_evolucao.pdf")
+# Rotulo do rodape e do titulo do PDF; o padrao continua o da Sprint 03.
+ROTULO = sys.argv[3] if len(sys.argv) > 3 else "ChargeGrid AI - Sprint 03 - EV Challenge GoodWe - Turma 1CCPO"
 
 ACCENT = colors.HexColor("#0B5C3B")
 GREY = colors.HexColor("#5A5A5A")
@@ -240,7 +242,7 @@ def rodape(canvas, doc):
     canvas.setFillColor(GREY)
     canvas.drawString(
         15 * mm, 10 * mm,
-        "ChargeGrid AI - Sprint 03 - EV Challenge GoodWe - Turma 1CCPO",
+        ROTULO,
     )
     canvas.drawRightString(A4[0] - 15 * mm, 10 * mm, f"Pagina {doc.page}")
     canvas.restoreState()
@@ -255,7 +257,7 @@ def main():
         rightMargin=15 * mm,
         topMargin=13 * mm,
         bottomMargin=15 * mm,
-        title="Relatorio de Evolucao - ChargeGrid AI Sprint 03",
+        title=ROTULO,
         author="Grupo ChargeGrid AI - Turma 1CCPO",
     )
     doc.build(parse(md), onFirstPage=rodape, onLaterPages=rodape)
